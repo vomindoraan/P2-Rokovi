@@ -43,7 +43,7 @@ int main(void)
     printf("Uneti broj tacaka (min 2): ");
     scanf("%u", &n);
     if (n < 2) {
-        return 1;
+        return 2;
     }
 
     ALLOC_CHECK(pts = malloc(n * sizeof(*pts)));
@@ -56,5 +56,6 @@ int main(void)
     di = findFarthest(pts, n);
     printf("%u %u %lf", di.p1, di.p2, di.dist);
 
+    free(pts);
     return 0;
 }
