@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define PROV_MEM(p) if (!(p)) fputs("Neuspesna alokacija", stderr), exit(1)
+
 int sifrovana(char *rec)
 {
     int len = strlen(rec);
@@ -21,7 +23,7 @@ int main(void)
     char *rec, c;
     int vel, i = 0, br_sif = 0, br_reci = 0;
 
-    rec = malloc(vel = 10);
+    PROV_MEM(rec = malloc(vel = 10));
     do {
         c = getchar();
         if (c == ' ' || c == '\n') {
@@ -36,7 +38,7 @@ int main(void)
         } else {
             rec[i++] = c;
             if (i == vel) {
-                rec = realloc(rec, vel *= 2);
+                PROV_MEM(rec = realloc(rec, vel *= 2));
             }
         }
     } while (c != '\n');
