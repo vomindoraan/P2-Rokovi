@@ -6,7 +6,7 @@ Rešeni zadaci iz C sa rokova iz Programiranja 2 na ETF-u
 
 ### Motivacija
 
-U svim ispitnim zadacima gde se javlja upravljanje dinamičkom memorijom ili datotekama (a to su maltene svi zadaci) potrebno je pisati  delove koda za proveru uspešnosti alokacije ili otvaranja iznova i iznova. To izgleda npr. ovako:
+U svim ispitnim zadacima gde se javlja upravljanje dinamičkom memorijom ili datotekama (a to su maltene svi zadaci) potrebno je pisati  delove koda za proveru uspešnosti alokacije ili otvaranja datoteke iznova i iznova. To izgleda npr. ovako:
 
 ```C
 Elem *p = malloc(sizeof *p);
@@ -44,7 +44,7 @@ Pomenuti makroi se mogu definisati na sledeći način:
  
 Ako je ostatak koda na srpskom, mogu se nazvati i `PROV_MEM` i `PROV_DAT`, respektivno, ili bilo kako drugačije. Manje poznate funkcije koje se ovde koriste su objašnjene [ispod](#ostalo).
  
-Na ovaj način, kada pretprocesor uradi tekstualnu zamenu, naredba `ALLOC_CHECK(p = malloc(sizeof *p));` se pretvori u `if (!(p = malloc(sizeof *p))) puts("Neuspesna alokacija"), exit(1);` što je ekvivalentno velikom `if` bloku odozgo; odnosno:
+Na ovaj način, kada pretprocesor uradi tekstualnu zamenu, naredba `ALLOC_CHECK(p = malloc(sizeof *p));` postane `if (!(p = malloc(sizeof *p))) puts("Neuspesna alokacija"), exit(1);` što je ekvivalentno velikom `if` bloku odozgo; odnosno:
 
 1. pokuša se alokacija bloka memorije date veličine;
 2. rezultat se dodeli u pokazivačku promenljivu;
@@ -60,7 +60,7 @@ Otvaranje datoteka se još više može uprostiti ako se uvede makro:
 #define ASSIGN(p, f, m) if (!((p) = fopen(f, m))) perror(f), exit(1)
 ```
 
-Ovaj makro u jednom udarcu pozove `fopen`, sačuva rezultat u pokazivač i proveri da li je kojim slučajem došlo do greške pri otvaranju, a ako jeste prekine program. Koristi se na sledeći način (slično kao funkcija `Assign` u Paskalu):
+Ovaj makro u jednom udarcu pozove `fopen` za ime i mod, sačuva rezultat u pokazivač i proveri da li je kojim slučajem došlo do greške pri otvaranju, a ako jeste prekine program. Koristi se na sledeći način (slično kao funkcija `Assign` u Paskalu):
 
 ```C
 FILE *fp;
