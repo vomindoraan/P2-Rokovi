@@ -8,8 +8,8 @@
 
 #define MAX_NAZ 30
 
-#define PROV_DAT(p) if (!(p)) perror(NULL), exit(1)
 #define PROV_MEM(p) if (!(p)) fputs("Neuspesna alokacija", stderr), exit(2)
+#define PROV_DAT(f) if (!(f)) perror(NULL), exit(1)
 
 typedef struct elem {
     char  naziv[MAX_NAZ];

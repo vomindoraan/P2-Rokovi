@@ -2,16 +2,16 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define NAME_LEN    21
+#define NAME_LEN 21
 
-#define FILE_IN     "radovi.txt"
-#define FILE_OUT    "izlaz.txt"
+#define FILE_IN  "radovi.txt"
+#define FILE_OUT "izlaz.txt"
 
-#define POINTS(n)   (2.0 / n)
+#define POINTS(n) (2.0 / n)
 
 // Proverava memoriju/fajl i po potrebi izlazi iz programa
-#define ALLOC_CHECK(p)  if (!(p)) printf("Neuspesna alokacija\n"), exit(1)
-#define FILE_CHECK(p)   if (!(p)) printf("Neuspesno otvaranje fajla\n"), exit(2)
+#define ALLOC_CHECK(p) if (!(p)) printf("Neuspesna alokacija\n"), exit(1)
+#define FILE_CHECK(f)  if (!(f)) printf("Neuspesno otvaranje fajla\n"), exit(2)
 
 const char *titles[] = {
     "docent", "vanredni profesor", "redovni profesor"

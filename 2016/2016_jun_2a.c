@@ -10,7 +10,7 @@
 
 #define MAX(a, b)      (((a) > (b)) ? (a) : (b))
 #define ALLOC_CHECK(p) if (!(p)) fputs("Neuspesna alokacija", stderr), exit(1)
-#define FILE_CHECK(p)  if (!(p)) perror(NULL), exit(2) // perror stampa poruku
+#define FILE_CHECK(f)  if (!(f)) perror(NULL), exit(2) // perror stampa poruku
 
 typedef struct elem {
     char name[NAME_LEN];

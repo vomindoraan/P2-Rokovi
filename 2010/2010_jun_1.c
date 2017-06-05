@@ -8,7 +8,7 @@
 #define NAME_LEN   101
 
 #define ALLOC_CHECK(p) if (!(p)) printf("Neuspesna alokacija\n"), exit(1)
-#define FILE_CHECK(p)  if (!(p)) printf("Neuspesno otvaranje fajla\n"), exit(2)
+#define FILE_CHECK(f)  if (!(f)) printf("Neuspesno otvaranje fajla\n"), exit(2)
 // Umesto 2. printf() moze perror(NULL) koje automatski stampa prikladnu gresku
 
 typedef struct elem {

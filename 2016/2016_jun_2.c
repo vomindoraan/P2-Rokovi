@@ -2,13 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define FILE_USERS  "korisnici.txt"
-#define FILE_LOG    "log.txt"
-#define NAME_LEN    21
-#define EMAIL_LEN   51
+#define FILE_USERS "korisnici.txt"
+#define FILE_LOG   "log.txt"
+#define NAME_LEN   21
+#define EMAIL_LEN  51
 
-#define ALLOC_CHECK(p)  if (!(p)) printf("Neuspesna alokacija\n"), exit(1)
-#define FILE_CHECK(p)   if (!(p)) printf("Neuspesno otvaranje fajla\n"), exit(2)
+#define ALLOC_CHECK(p) if (!(p)) printf("Neuspesna alokacija\n"), exit(1)
+#define FILE_CHECK(f)  if (!(f)) printf("Neuspesno otvaranje fajla\n"), exit(2)
 
 typedef struct elem {
     char name[NAME_LEN];

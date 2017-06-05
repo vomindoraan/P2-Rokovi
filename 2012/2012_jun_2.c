@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define FILE_IN     "kalendar.txt"
-#define FILE_OUT    "preklapanja.txt"
-#define BUF_LEN     81
+#define FILE_IN  "kalendar.txt"
+#define FILE_OUT "preklapanja.txt"
+#define BUF_LEN  81
 
-#define ALLOC_CHECK(p)  if (!(p)) printf("Neuspesna alokacija\n"), exit(1)
-#define FILE_CHECK(p)   if (!(p)) printf("Neuspesno otvaranje fajla\n"), exit(2)
+#define ALLOC_CHECK(p) if (!(p)) printf("Neuspesna alokacija\n"), exit(1)
+#define FILE_CHECK(f)  if (!(f)) printf("Neuspesno otvaranje fajla\n"), exit(2)
 
 typedef struct elem {
     unsigned start, finish;
