@@ -6,7 +6,7 @@ Rešeni zadaci iz C sa rokova iz Programiranja 2 na ETF-u
 
 ### Motivacija
 
-U svim ispitnim zadacima gde se javlja upravljanje dinamičkom memorijom ili datotekama (a to su maltene svi zadaci) potrebno je pisati  delove koda za proveru uspešnosti iznova i iznova. To izgleda npr. ovako:
+U svim ispitnim zadacima gde se javlja upravljanje dinamičkom memorijom ili datotekama (a to su maltene svi zadaci) potrebno je pisati  delove koda za proveru uspešnosti alokacije ili otvaranja iznova i iznova. To izgleda npr. ovako:
 
 ```C
 Elem *p = malloc(sizeof *p);
@@ -31,7 +31,7 @@ Elem *p = malloc(sizeof *p);
 ALLOC_CHECK(p);
 ```
 
-ili, ukoliko je `p` ranije definisano, još kraće: `ALLOC_CHECK(p = malloc(sizeof *p));`. Naravno, na kraju se memorija mora osloboditi s `free(p)`.
+ili, ukoliko je `p` ranije definisano, još kraće: `ALLOC_CHECK(p = malloc(sizeof *p));`. Naravno, na kraju se memorija i dalje mora osloboditi s `free(p)`.
 
 ### Implementacija
 
@@ -42,15 +42,15 @@ Pomenuti makroi se mogu definisati na sledeći način:
 #define FILE_CHECK(f)  if (!(f)) perror(NULL), exit(2)
 ```
  
-Ako je ostatak koda na srpskom, mogu se nazvati i `PROV_MEM` i `PROV_DAT`, respektivno, ili bilo kako drugačije.
+Ako je ostatak koda na srpskom, mogu se nazvati i `PROV_MEM` i `PROV_DAT`, respektivno, ili bilo kako drugačije. Manje poznate funkcije koje se ovde koriste su objašnjene [ispod](#ostalo).
  
 Na ovaj način, kada pretprocesor uradi tekstualnu zamenu, naredba `ALLOC_CHECK(p = malloc(sizeof *p));` se pretvori u `if (!(p = malloc(sizeof *p))) puts("Neuspesna alokacija"), exit(1);` što je ekvivalentno velikom `if` bloku odozgo; odnosno:
 
 1. pokuša se alokacija bloka memorije date veličine;
-2. rezultat se dodeli u pok. promenljivu;
+2. rezultat se dodeli u pokazivačku promenljivu;
 3. ako je rezultat nula, ispisuje se poruka i prekida se program.
 
-Isto važi i za makro `FILE_CHECK`, samo je u pitanju otvaranje datoteke umesto alokacija. Primetiti da su u makroima zagrade <code>if (!**_(_**p**_)_**)</code> veoma bitne jer bi bez njih pretprocesor dao neispravan kod.
+Isto važi i za makro `FILE_CHECK`, samo je tu u pitanju otvaranje datoteke umesto alokacija. Primetiti da su u makroima zagrade <code>if (!**_(_**p**_)_**)</code> veoma bitne jer bi bez njih tekstualna zamena dala neispravan kod.
 
 ### `ASSIGN` makro
 
@@ -73,7 +73,7 @@ ASSIGN(fp, "moja_dat.bin", "rb+");
 
 Funkcija `puts` ispisuje string na std. izlaz i prelazi u novi red. `puts("Neuspesna alokacija");` je, dakle, isto što i `printf("Neuspesna alokacija\n");`, samo što je malo brže za pisanje i ne mora se voditi računa ako se ispusuju znaci `%` (`puts` nema formatiranje). 
 
-`fputs` radi sličnu stvar, samo što umesto na std. izlaz ispisuje u datoteku koja se zadaje kao drugi argument. Dakle, <code>fputs("Neuspesna alokacija", [stderr](http://www.cplusplus.com/reference/cstdio/stderr/))</code> umesto na std. izlaz ispisuje poruku na std. izlaz za greške (mada to nije toliko bitno za zadatke), dok `fputs("poyy", fp)` upisuje string u otvorenu datoteku na koju pokazuje `fp`.
+`fputs` radi sličnu stvar, samo što umesto na std. izlaz ispisuje string u datoteku koja se zadaje kao drugi argument. Dakle, <code>fputs("Neuspesna alokacija", [stderr](http://www.cplusplus.com/reference/cstdio/stderr/))</code> umesto na std. izlaz ispisuje poruku na std. izlaz za greške (mada to nije toliko bitno za zadatke), dok `fputs("poyy", fp)` upisuje string u otvorenu datoteku na koju pokazuje `fp`.
 
 ### <code>[perror](http://www.cplusplus.com/reference/cstdio/perror/)(NULL)</code>
 
