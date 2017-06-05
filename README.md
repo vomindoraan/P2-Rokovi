@@ -60,7 +60,7 @@ Otvaranje datoteka se još više može uprostiti ako se uvede makro:
 #define ASSIGN(p, f, m) if (!((p) = fopen(f, m))) perror(f), exit(1)
 ```
 
-Ovaj makro u jednom udarcu pozove `fopen` za ime i mod, sačuva rezultat u pokazivač i proveri da li je kojim slučajem došlo do greške pri otvaranju, a ako jeste prekine program. Koristi se na sledeći način (slično kao funkcija `Assign` u Paskalu):
+Ovaj makro u jednom udarcu pozove `fopen` za dato ime i mod, sačuva rezultat u pokazivač i proveri da li je kojim slučajem došlo do greške pri otvaranju, a ako jeste prekine program. Koristi se na sledeći način (slično kao funkcija `Assign` u Paskalu):
 
 ```C
 FILE *fp;
@@ -71,9 +71,9 @@ ASSIGN(fp, "moja_dat.bin", "rb+");
 
 ### [`puts`](http://www.cplusplus.com/reference/cstdio/puts/) / [`fputs`](http://www.cplusplus.com/reference/cstdio/fputs/)
 
-Funkcija `puts` ispisuje string na std. izlaz i prelazi u novi red. `puts("Neuspesna alokacija");` je, dakle, isto što i `printf("Neuspesna alokacija\n");`, samo što je malo brže za pisanje i ne mora se voditi računa ako se ispusuju znaci `%` (`puts` nema formatiranje). 
+Funkcija `puts` ispisuje string na standardni izlaz i prelazi u novi red. `puts("Neuspesna alokacija");` je, dakle, isto što i `printf("Neuspesna alokacija\n");`, samo što je malo brže za pisanje i ne mora se voditi računa ako se ispusuju znaci `%` (`puts` nema formatiranje). 
 
-`fputs` radi sličnu stvar, samo što umesto na std. izlaz ispisuje string u datoteku koja se zadaje kao drugi argument. Dakle, <code>fputs("Neuspesna alokacija", [stderr](http://www.cplusplus.com/reference/cstdio/stderr/))</code> umesto na std. izlaz ispisuje poruku na std. izlaz za greške (mada to nije toliko bitno za zadatke), dok `fputs("poyy", fp)` upisuje string u otvorenu datoteku na koju pokazuje `fp`.
+`fputs` radi sličnu stvar, samo što umesto na izlaz ispisuje string u datoteku koja se zadaje kao drugi argument. Dakle, <code>fputs("Neuspesna alokacija", [stderr](http://www.cplusplus.com/reference/cstdio/stderr/))</code> umesto na standardni izlaz ispisuje poruku na izlaz za greške (mada to nije toliko bitno za zadatke), dok `fputs("poyy", fp)` upisuje string u otvorenu datoteku na koju pokazuje `fp`.
 
 ### <code>[perror](http://www.cplusplus.com/reference/cstdio/perror/)(NULL)</code>
 
