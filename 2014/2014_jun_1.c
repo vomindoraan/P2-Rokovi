@@ -1,18 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define ALLOC_CHECK(p) if (!(p)) puts("Neuspesna alokacija"), exit(1)
+#define ALLOC_CHECK(p) if (!(p)) printf("Neuspesna alokacija\n"), exit(1)
 
 int is_prime(int n)
 {
     int i, prime = 1;
-    if (n == 1) {
-        return 0;
+    if (n <= 1) {
+        prime = 0;
     }
-    for (i = 2; i < n; ++i) {
+    for (i = 2; prime && i <= n/2; ++i) {
         if (n % i == 0) {
             prime = 0;
-            break;
         }
     }
     return prime;
@@ -20,11 +19,13 @@ int is_prime(int n)
 
 void modify(int **mat, int n)
 {
-    int i;
+    int i, j;
     for (i = 1; i < n; ++i) {
-        int j = n-i, *p = &mat[i][j];
-        if (is_prime(*p)) {
-            *p = mat[i-1][j-1];
+        for (j = n-i; j < n; ++j) {
+            int *p = &mat[i][j];
+            if (is_prime(*p)) {
+                *p = mat[n-1-j][n-1-i];
+            }
         }
     }
 }
@@ -34,7 +35,7 @@ int main(int argc, char *argv[])
     int n, **mat, i, j;
 
     if (argc != 2) {
-        return 1;
+        return 2;
     }
     n = atoi(argv[1]);
 
@@ -45,7 +46,7 @@ int main(int argc, char *argv[])
         mat[i] = malloc(n * sizeof(**mat));
         ALLOC_CHECK(mat[i]);
         
-        printf("Uneti elemente %d. vrste:\n", i);
+        printf("\nUneti elemente %d. vrste:\n", i);
         for (j = 0; j < n; ++j) {
             scanf("%d", mat[i]+j);
         }
@@ -53,12 +54,12 @@ int main(int argc, char *argv[])
 
     modify(mat, n);
 
-    puts("Matrica nakon obrade:");
+    printf("\nMatrica nakon obrade:\n");
     for (i = 0; i < n; ++i) {
         for (j = 0; j < n; ++j) {
             printf("%d\t", mat[i][j]);
         }
-        putchar('\n');
+        printf("\n\n");
         
         free(mat[i]);
     }
