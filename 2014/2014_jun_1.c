@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define ALLOC_CHECK(p) if (!(p)) puts("Neuspesna alokacija"), exit(1)
+
 int is_prime(int n)
 {
     int i, prime = 1;
@@ -37,8 +39,11 @@ int main(int argc, char *argv[])
     n = atoi(argv[1]);
 
     mat = malloc(n * sizeof(*mat));
+    ALLOC_CHECK(mat);
+
     for (i = 0; i < n; ++i) {
         mat[i] = malloc(n * sizeof(**mat));
+        ALLOC_CHECK(mat[i]);
         
         printf("Uneti elemente %d. vrste:\n", i);
         for (j = 0; j < n; ++j) {
@@ -48,12 +53,12 @@ int main(int argc, char *argv[])
 
     modify(mat, n);
 
-    printf("Matrica nakon obrade:\n");
+    puts("Matrica nakon obrade:");
     for (i = 0; i < n; ++i) {
         for (j = 0; j < n; ++j) {
             printf("%d\t", mat[i][j]);
         }
-        printf("\n");
+        putchar('\n');
         
         free(mat[i]);
     }
