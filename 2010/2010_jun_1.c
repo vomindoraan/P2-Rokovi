@@ -8,7 +8,8 @@
 #define NAME_LEN   101
 
 #define ALLOC_CHECK(p) if (!(p)) printf("Neuspesna alokacija\n"), exit(1)
-#define FILE_CHECK(p) if (!(p)) printf("Neuspesno otvaranje fajla\n"), exit(2)
+#define FILE_CHECK(p)  if (!(p)) printf("Neuspesno otvaranje fajla\n"), exit(2)
+// Umesto 2. printf() moze perror(NULL) koje automatski stampa prikladnu gresku
 
 typedef struct elem {
     char reg[REG_LEN];
@@ -35,20 +36,21 @@ Elem *read_cars(FILE *file)
         p->km = 0;
         p->next = NULL;
 
-        size = 10;
         i = 0;
-        p->name = malloc(size);
+        p->name = malloc(size = 10);
+        ALLOC_CHECK(p->name);
 
         while ((c = fgetc(file)) != '\n') {
             if (i == size) {
-                size *= 2;
-                p->name = realloc(p->name, size);
+                p->name = realloc(p->name, size *= 2);
+                ALLOC_CHECK(p->name);
             }
             p->name[i++] = c;
         }
 
         p->name[i] = '\0';
         p->name = realloc(p->name, i+1);
+        // ALLOC_CHECK nije potreban jer se skracuje
 
         if (!list) {
             list = p;
