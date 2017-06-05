@@ -88,9 +88,9 @@ Ove dve operacije rade isto (daju veličinu u bajtovima onoga na šta `p` pokazu
 Alociranje niza od 10 brojeva onda izgleda ovako: `int *niz = malloc(10 * sizeof *niz);` ili `int *niz = calloc(10, sizeof *niz);`, dok se matrice formiraju na sledeći način:
 
 ```C
-int **mat = malloc(sizeof *mat);    // *mat → int *
-for (i = 0; i < n; i++) {
-    mat[i] = malloc(sizeof **mat);  // **mat → int
+int **mat = malloc(m * sizeof *mat);   // *mat → int *
+for (i = 0; i < m; i++) {
+    mat[i] = malloc(n * sizeof **mat); // **mat → int
     for (j = 0; j < n; j++)
         scanf("%d", &mat[i][j]);
 }
