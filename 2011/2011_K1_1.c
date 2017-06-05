@@ -12,7 +12,7 @@
 /* Vraca pseudoslucajan ceo broj u intervalu [min, max] */
 int rand_int(int min, int max)
 {
-	return rand() / (double)RAND_MAX * (max-min) + min;
+    return rand() / (double)RAND_MAX * (max-min) + min;
 }
 
 /*
@@ -22,24 +22,24 @@ int rand_int(int min, int max)
  */
 int check_fib(int n)
 {
-	int a = 5*SQR(n) - 4, b = 5*SQR(n) + 4;
-	int sqrt_a = sqrt(a), sqrt_b = sqrt(b);
-	return SQR(sqrt_a) == a || SQR(sqrt_b) == b;
+    int a = 5*SQR(n) - 4, b = 5*SQR(n) + 4;
+    int sqrt_a = sqrt(a), sqrt_b = sqrt(b);
+    return SQR(sqrt_a) == a || SQR(sqrt_b) == b;
 }
 
 int main(void)
 {
-	int n, i;
+    int n, i;
 
-	SEED_RNG;
-	printf("Generisani broj je: %d\n", n = rand_int(LOW, HIGH));
-	printf("Taj broj %s Fibonacijev\n", check_fib(n) ? "jeste" : "nije");
+    SEED_RNG;
+    printf("Generisani broj je: %d\n", n = rand_int(LOW, HIGH));
+    printf("Taj broj %s Fibonacijev\n", check_fib(n) ? "jeste" : "nije");
 
-	for (i = 0; i < 1000000; ++i) {
-		if (check_fib(i)) {
-			printf("%d\n", i);
-		}
-	}
+    for (i = 0; i < 1000000; ++i) {
+        if (check_fib(i)) {
+            printf("%d\n", i);
+        }
+    }
 
-	return 0;
+    return 0;
 }

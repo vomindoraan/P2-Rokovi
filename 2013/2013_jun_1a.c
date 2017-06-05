@@ -35,17 +35,17 @@ int main(void)
     Tacka *niz;
     int n, i, idx1, idx2;
     float max_razd;
-	
+    
     scanf("%d", &n);
     if (n < 1 || n > MAX) {
         return 1;
     }
 
-	niz = calloc(n, sizeof(Tacka));
-	if (!niz) {
-		fputs("Neuspesna alokacija memorije", stderr);
-		return 2;
-	}
+    niz = calloc(n, sizeof(Tacka));
+    if (!niz) {
+        fputs("Neuspesna alokacija memorije", stderr);
+        return 2;
+    }
 
     for (i = 0; i < n; ++i)
         scanf("%f%f%f", &niz[i].x, &niz[i].y, &niz[i].z);
@@ -54,6 +54,6 @@ int main(void)
 
     printf("Maks. razdaljina = %f\nidx1 = %d\nidx2 = %d\n",
            max_razd, idx1, idx2);
-	
-	free(niz);
+    
+    free(niz);
 }
