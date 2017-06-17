@@ -7,8 +7,8 @@
 
 #define FILE_CHECK(f) if (!(f)) perror(NULL), exit(1)
 
-#define STR_(x)       #x
-#define STR(x)        STR_(x)
+#define STR_(x) #x
+#define STR(x)  STR_(x)
 // Za radoznale: https://everything2.com/title/stringize+macro+macro+hack
 
 typedef struct {
@@ -51,10 +51,10 @@ void insert_node(StudentNode **phead, StudentNode *node)
     StudentNode *p = *phead, *prev = NULL;
     Student st = node->st;
     
-    while ((st.wish > p->st.wish
+    while (p &&
+          (st.wish >  p->st.wish
         || st.wish == p->st.wish && st.gpa  < p->st.gpa
-        || st.wish == p->st.wish && st.gpa == p->st.gpa && st.id > p->st.id)
-        && p)
+        || st.wish == p->st.wish && st.gpa == p->st.gpa && st.id > p->st.id))
     {
         prev = p;
         p = p->next;
