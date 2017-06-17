@@ -24,7 +24,7 @@ if (!fp) {
 }
 ```
 
-Pošto su ovi kodovi uvek isti, može se znatno uštedeti na pisanju ako se ti delovi izvuku u makroe. Na taj način, umesto pisanja `if`-ova na svakom mestu gde se alocira memorija ili otvara datoteka (što može biti i do 5–6 puta po zadatku), dobija se ovako nešto:
+Pošto su ovi kodovi uvek isti, može se značajno uštedeti na pisanju ako se ti delovi izvuku u makroe. Na taj način, umesto pisanja `if`-ova na svakom mestu gde se alocira memorija ili otvara datoteka (što može biti i do 5–6 puta po zadatku), dobija se ovako nešto:
 
 ```C
 Elem *p = malloc(sizeof *p);
@@ -60,7 +60,7 @@ Otvaranje datoteka se još više može uprostiti ako se uvede makro:
 #define ASSIGN(p, f, m) if (!((p) = fopen(f, m))) perror(f), exit(1)
 ```
 
-Ovaj makro u jednom udarcu pozove `fopen` za dato ime i mod, sačuva rezultat u pokazivač i proveri da li je kojim slučajem došlo do greške pri otvaranju, a ako jeste prekine program. Koristi se na sledeći način (slično kao funkcija `Assign` u Paskalu):
+Ovaj makro u jednom potezu pozove `fopen` za dato ime i mod, sačuva rezultat u pokazivač i proveri da li je kojim slučajem došlo do greške pri otvaranju, a ako jeste prekine program. Koristi se na sledeći način (slično kao funkcija `Assign` u Paskalu):
 
 ```C
 FILE *fp;
@@ -77,7 +77,7 @@ Funkcija `puts` ispisuje string na standardni izlaz i prelazi u novi red. `puts(
 
 ### <code>[perror](http://www.cplusplus.com/reference/cstdio/perror/)(NULL)</code>
 
-Veoma korisna funkcija koja automatski ispisuje odgovarajuću poruku za grešku koja se desila prilikom otvaranja datoteke, npr. “No such file or directory” ili “File already in use”. Umesto `NULL` se može proslediti string koji će se ispisati zajedno sa porukom, npr. `perror("Greska")` → “Greska: File already in use”.
+Veoma korisna funkcija koja automatski ispisuje odgovarajuću poruku za grešku koja se desila prilikom otvaranja datoteke, npr. „No such file or directory” ili „File already in use”. Umesto `NULL` se može proslediti string koji će se ispisati zajedno sa porukom, npr. `perror("Greska")` → „Greska: File already in use”.
 
 Sve gorenavedene funkcije su iz zaglavlja `<stdio.h>`.
 
@@ -88,9 +88,9 @@ Ove dve operacije rade isto (daju veličinu u bajtovima onoga na šta `p` pokazu
 Alociranje niza od 10 brojeva onda izgleda ovako: `int *niz = malloc(10 * sizeof *niz);` ili `int *niz = calloc(10, sizeof *niz);`, dok se matrice formiraju na sledeći način:
 
 ```C
-int **mat = malloc(m * sizeof *mat);   // *mat → int *
+int **mat = malloc(m * sizeof *mat);   // *mat daje tip int *
 for (i = 0; i < m; i++) {
-    mat[i] = malloc(n * sizeof **mat); // **mat → int
+    mat[i] = malloc(n * sizeof **mat); // **mat daje tip int
     for (j = 0; j < n; j++)
         scanf("%d", &mat[i][j]);
 }
