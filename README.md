@@ -67,6 +67,20 @@ FILE *fp;
 ASSIGN(fp, "moja_dat.bin", "rb+");
 ```
 
+### Nedostaci
+
+Mali nedostatak ovih makroa je da se zbog svog oblika ne smeju naći unutar kratke `if` naredbe neposredno pre `else` grane. Makro ekspanzija bi u tom slučaju neželjeno izmenila semantiku programa. Primer:
+
+```C
+if (uslov)
+    ALLOC_CHECK(p = malloc(sizeof *p));
+else // Odnosi se na if u makrou, ne na `if (uslov)`
+    puts("Nije uslov");
+```
+
+Mala je verovatnoća da se ovo desi, ali u tom slučaju samo treba pisati vitičaste zagrade oko grana `if`-a i neće biti problema.
+
+
 ## Ostalo
 
 ### [`puts`](http://www.cplusplus.com/reference/cstdio/puts/) / [`fputs`](http://www.cplusplus.com/reference/cstdio/fputs/)
