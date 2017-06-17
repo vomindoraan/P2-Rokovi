@@ -95,3 +95,18 @@ for (i = 0; i < m; i++) {
         scanf("%d", &mat[i][j]);
 }
 ```
+
+### Potpis funkcije `main`
+
+Po standardu jezika C postoje dva ispravna potpisa za glavni program:
+
+1. `int main(void)` – bez argumenata komandne linije;
+2. `int main(int argc, char *argv[])` – sa argumentima komandne linije.
+
+Pritom vredi naglasiti da imena parametara `argc` i `argv` nisu ni na koji način posebna i da se oni mogu zvati bilo kako, dokle god su im tipovi `int` i `char*[]` (odnosno `char**`), respektivno. Dakle, i `int main(int n, char **a)` je sasvim ispravan potpis.
+
+Prema tome, varijante `void main()` ili ne daj bože samo `main()` **nisu ispravne** i ne treba tako pisati. Razlozi zašto prevodilac ovo dozvoljava su istorijski (davno, pre standardizacije C-a, se pisalo ovako i na još par načina), ali tome nije mesto u današnjem kodu. Mada ne iznađuje me da Katedra i dalje ovako piše.
+
+Što se tiče potpisa `int main()` i on može proći kao prigodna zamena za 1. varijantu, ali postoji mala razlika: u C-u potpis `(void)` znači da funkcija _ne prima_ argumente, dok `()` znači da prima _proizvoljan broj_ argumenata. Prva varijanta je bolja jer je eksplicitnija.
+
+Povratna vrednost glavnog programa je tipa `int` zato što preko nje programi javljaju okruženju da li su se uspešno izvršili (0 – uspešno; ≠0 – neuspešno, vrednost predstavlja kod greške). Međutim, `return 0` na kraju `main`-a se ne mora pisati jer se po standardu podrazumeva, tako da se ništa ne gubi prelaskom sa `void` na `int`.
