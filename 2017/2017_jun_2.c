@@ -5,9 +5,11 @@
 #define NAME_LEN    30
 #define UNASSIGNED  "NEUPISAN"
 
-#define STR_(n)       #n
-#define STR(n)        STR_(n)
 #define FILE_CHECK(f) if (!(f)) perror(NULL), exit(1)
+
+#define STR_(x)       #x
+#define STR(x)        STR_(x)
+// Za radoznale: https://everything2.com/title/stringize+macro+macro+hack
 
 typedef struct {
     int  id;
@@ -34,7 +36,7 @@ int read_schools(SchoolArray schools, FILE* fin)
     int n = 0;
 
     while (fscanf(fin, "%d %"STR(NAME_LEN)"[^\n]",
-        &schools[n].free_places, schools[n].name) == 2)
+                  &schools[n].free_places, schools[n].name) == 2)
     // STR(NAME_LEN) pretvara 30 u "30", pa se dobija format "%30[^\n]", sto
     // znaci "citaj string od najvise 30 znakova dok ne dodjes do kraja reda"
     {
