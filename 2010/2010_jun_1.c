@@ -5,7 +5,6 @@
 #define FILE_CARS  "automobili.txt"
 #define FILE_TRIPS "putovanja.txt"
 #define REG_LEN    7
-#define NAME_LEN   101
 
 #define ALLOC_CHECK(p) if (!(p)) printf("Neuspesna alokacija\n"), exit(1)
 #define FILE_CHECK(f)  if (!(f)) printf("Neuspesno otvaranje fajla\n"), exit(2)
