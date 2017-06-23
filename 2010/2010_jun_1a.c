@@ -23,19 +23,18 @@ Elem *read_cars(FILE *file)
 
     while (1) {
         char c;
-        unsigned size, i;
+        unsigned size, i = 0;
 
         Elem *p = malloc(sizeof *p);
         ALLOC_CHECK(p);
         
-        if (fscanf(file, "%6s", p->reg) != 1) {
+        if (fscanf(file, "%6s ", p->reg) != 1) {
             return list;
         }
 
         p->km = 0;
         p->next = NULL;
 
-        i = 0;
         p->name = malloc(size = 10);
         ALLOC_CHECK(p->name);
 
@@ -67,10 +66,10 @@ void read_trips(FILE *file, Elem *list)
 
     while (fscanf(file, "%10s %6s %u", date, reg, &km) == 3) {
         Elem *p = list;
-        while (p && strcmp(reg, p->reg) == 0) {
+        while (p && strcmp(reg, p->reg) != 0) {
             p = p->next;
         }
-        if (strcmp(reg, p->reg) == 0) {
+        if (p) {
             p->km += km;
         }
     }
@@ -111,7 +110,7 @@ int main(void)
         }
         p = p->next;
     }
-    printf("%s %u\n", q->reg, q->km);
+    printf("%s %s\n", q->reg, q->name);
 
     q = list;
     km = q->km;
@@ -123,7 +122,7 @@ int main(void)
         }
         p = p->next;
     }
-    printf("%s %u\n", q->reg, q->km);
+    printf("%s %s\n", q->reg, q->name);
 
     free_list(list);
 }
