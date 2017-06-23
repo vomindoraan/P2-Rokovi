@@ -8,7 +8,7 @@
 
 #define ALLOC_CHECK(p) if (!(p)) printf("Neuspesna alokacija\n"), exit(1)
 #define FILE_CHECK(f)  if (!(f)) printf("Neuspesno otvaranje fajla\n"), exit(2)
-// Umesto 2. printf() moze perror(NULL) koje automatski stampa prikladnu gresku
+//Umesto drugog printf moze perror(NULL) koji automatski stampa prikladnu gresku
 
 typedef struct elem {
     char reg[REG_LEN];
@@ -29,7 +29,7 @@ Elem *read_cars(FILE *file)
         ALLOC_CHECK(p);
         
         if (fscanf(file, "%6s", p->reg) != 1) {
-            break;
+            return list;
         }
 
         p->km = 0;
@@ -65,7 +65,7 @@ void read_trips(FILE *file, Elem *list)
     char date[11], reg[REG_LEN];
     unsigned km;
 
-    while (fscanf(file, "%s %6s %u", date, reg, &km) == 3) {
+    while (fscanf(file, "%10s %6s %u", date, reg, &km) == 3) {
         Elem *p = list;
         while (p && strcmp(reg, p->reg) == 0) {
             p = p->next;
@@ -126,5 +126,4 @@ int main(void)
     printf("%s %u\n", q->reg, q->km);
 
     free_list(list);
-    return 0;
 }
