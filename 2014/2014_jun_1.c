@@ -22,9 +22,8 @@ void modify(int **mat, int n)
     int i, j;
     for (i = 1; i < n; ++i) {
         for (j = n-i; j < n; ++j) {
-            int *p = &mat[i][j];
-            if (is_prime(*p)) {
-                *p = mat[n-1-j][n-1-i];
+            if (is_prime(mat[i][j])) {
+                mat[i][j] = mat[n-1-j][n-1-i];
             }
         }
     }
