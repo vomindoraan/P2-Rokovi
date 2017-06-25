@@ -20,7 +20,8 @@ typedef struct elem {
     struct elem* next;
 } Elem;
 
-Elem *read_list(FILE *fp) {
+Elem *read_list(FILE *fp)
+{
     Elem *head = NULL, *tail;
     char name[NAME_LEN], email[EMAIL_LEN];
 
@@ -42,7 +43,8 @@ Elem *read_list(FILE *fp) {
     return head;
 }
 
-void update_list(Elem *list, FILE *fp) {
+void update_list(Elem *list, FILE *fp)
+{
     char email[EMAIL_LEN], action;
     int time;
 
@@ -59,7 +61,8 @@ void update_list(Elem *list, FILE *fp) {
     }
 }
 
-void free_list(Elem **plist) {
+void free_list(Elem **plist)
+{
     while (*plist) {
         Elem *p = *plist;
         *plist = (*plist)->next;

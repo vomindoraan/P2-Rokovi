@@ -4,7 +4,8 @@
 
 #define PROV_MEM(p) if (!(p)) puts("Neuspesna alokacija"), exit(1)
 
-bool prost(int n) {
+bool prost(int n)
+{
     int i;
     if (n <= 1)
         return false;
@@ -14,7 +15,8 @@ bool prost(int n) {
     return true;
 }
 
-void obrada(int **mat, int n) {
+void obrada(int **mat, int n)
+{
     int i, j;
     for (i = 1; i < n; i++)
         for (j = 1; j < n; j++)
@@ -22,7 +24,8 @@ void obrada(int **mat, int n) {
                 mat[i][j] = mat[n-1-j][n-1-i];
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
     int **mat, n, i, j;
 
     if (argc != 2)

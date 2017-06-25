@@ -57,7 +57,8 @@ Chess read_chess(void)
     return chess;
 }
 
-void free_chess(Chess chess) {
+void free_chess(Chess chess)
+{
     for (int i = 0; i < chess.white.m; i++) {
         free(chess.white.squares[i]);
         free(chess.black.squares[i]);
@@ -76,7 +77,8 @@ void check(Board board, int i, int j)
     }
 }
 
-void solve(Chess chess, int side) { // 1=white, 0=black
+void solve(Chess chess, int side) // 1=white, 0=black
+{
     Board player = side ? chess.white : chess.black,
           enemy  = side ? chess.black : chess.white;
 
