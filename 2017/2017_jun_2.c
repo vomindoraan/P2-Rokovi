@@ -7,14 +7,15 @@
 
 #define FILE_CHECK(f) if (!(f)) perror(NULL), exit(1)
 
+// NIJE NEOPHODNO
 #define STR_(x) #x
 #define STR(x)  STR_(x)
-// Za radoznale: https://everything2.com/title/stringize+macro+macro+hack
+// Objasnjenje: https://everything2.com/title/stringize+macro+macro+hack
 
 typedef struct {
-    int  id;
-    char name[NAME_LEN+1];
     int  free_places;
+    char name[NAME_LEN+1];
+    // Ne mora se cuvati redni broj jer je sam indeks skole u nizu redni broj
 } School;
 
 typedef School SchoolArray[MAX_SCHOOLS];
@@ -31,21 +32,21 @@ typedef struct node {
     struct node *next;
 } StudentNode;
 
-int read_schools(SchoolArray schools, FILE* fin)
+int read_schools(SchoolArray schools, FILE *fin)
 {
     int n = 0;
-
     while (fscanf(fin, "%d %"STR(NAME_LEN)"[^\n]",
                   &schools[n].free_places, schools[n].name) == 2)
     // STR(NAME_LEN) pretvara 30 u "30", pa se dobija format "%30[^\n]", sto
     // znaci "citaj string od najvise 30 znakova dok ne dodjes do kraja reda"
     {
-        schools[n].id = n++;
+        n++;
     }
-
     return n;
 }
 
+// Ubacuje novi cvor u listu sortirano po zelji, pa po proseku, pa po prijavi
+// ** jer se glava moze promeniti
 void insert_node(StudentNode **phead, StudentNode *node)
 {
     StudentNode *p = *phead, *prev = NULL;
@@ -68,7 +69,7 @@ void insert_node(StudentNode **phead, StudentNode *node)
     node->next = p;
 }
 
-StudentNode *read_students(FILE* fin)
+StudentNode *read_students(FILE *fin)
 {
     StudentNode *head = NULL;
     Student st;
@@ -98,7 +99,7 @@ void free_students(StudentNode *head)
     }
 }
 
-void sorting_hat(StudentNode *students, SchoolArray schools, int n, FILE* fout)
+void sorting_hat(StudentNode *students, SchoolArray schools, int n, FILE *fout)
 {
     for (StudentNode *p = students; p; p = p->next) {
         fprintf(fout, "%d %s %.2f ", p->st.id, p->st.name, p->st.gpa);
