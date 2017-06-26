@@ -9,9 +9,9 @@ int main(void)
 
     fgets(str, MAX_LEN, stdin);
 
-    for (c = str; *c != '\0'; ++c) {
+    for (c = str; *c; ++c) {
         if (*c == '[') {
-            sscanf(c+1, "%d", &n);
+            n = atoi(c+1);
             c += n - 1;
         } else {
             putchar(*c);
