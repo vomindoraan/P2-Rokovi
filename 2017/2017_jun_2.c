@@ -2,19 +2,14 @@
 #include <stdlib.h>
 
 #define MAX_SCHOOLS 400
-#define NAME_LEN    30
+#define NAME_LEN    31
 #define UNASSIGNED  "NEUPISAN"
 
 #define FILE_CHECK(f) if (!(f)) perror(NULL), exit(1)
 
-// NIJE NEOPHODNO
-#define STR_(x) #x
-#define STR(x)  STR_(x)
-// Objasnjenje: https://everything2.com/title/stringize+macro+macro+hack
-
 typedef struct {
-    int  free_places;
-    char name[NAME_LEN+1];
+    int  free_spots;
+    char name[NAME_LEN];
     // Ne mora se cuvati redni broj jer je sam indeks skole u nizu redni broj
 } School;
 
@@ -22,7 +17,7 @@ typedef School SchoolArray[MAX_SCHOOLS];
 
 typedef struct {
     int   id;
-    char  name[NAME_LEN+1];
+    char  name[NAME_LEN];
     float gpa;
     int   wish;
 } Student;
@@ -34,22 +29,16 @@ typedef struct node {
 
 int read_schools(SchoolArray schools, FILE *fin)
 {
-    int n = 0;
-    while (fscanf(fin, "%d %"STR(NAME_LEN)"[^\n]",
-                  &schools[n].free_places, schools[n].name) == 2)
-    // STR(NAME_LEN) pretvara 30 u "30", pa se dobija format "%30[^\n]", sto
-    // znaci "citaj string od najvise 30 znakova dok ne dodjes do kraja reda"
-    {
-        n++;
-    }
-    return n;
+    int i = 0;
+    while (fscanf(fin, "%d %[^\n]", &schools[i].free_spots, schools[i].name)==2)
+        i++;
+    return i;
 }
 
-// Ubacuje novi cvor u listu sortirano po zelji, pa po proseku, pa po prijavi
-// ** jer se glava moze promeniti
-void insert_node(StudentNode **phead, StudentNode *node)
+// Ubacuje novi cvor u listu sortirano po zelji, pa po proseku, pa po br.prijave
+StudentNode *insert_node(StudentNode *head, StudentNode *node)
 {
-    StudentNode *p = *phead, *prev = NULL;
+    StudentNode *p = head, *prev = NULL;
     Student st = node->st;
     
     while (p &&
@@ -61,12 +50,11 @@ void insert_node(StudentNode **phead, StudentNode *node)
         p = p->next;
     }
 
-    if (!prev) {
-        *phead = node;
-    } else {
-        prev->next = node;
-    }
+    if (prev) prev->next = node;
+    else      head = node;
     node->next = p;
+
+    return head;
 }
 
 StudentNode *read_students(FILE *fin)
@@ -84,7 +72,7 @@ StudentNode *read_students(FILE *fin)
         node->st = st;
         node->next = NULL;
 
-        insert_node(&head, node);
+        head = insert_node(head, node);
     }
 
     return head;
@@ -105,9 +93,9 @@ void sorting_hat(StudentNode *students, SchoolArray schools, int n, FILE *fout)
         fprintf(fout, "%d %s %.2f ", p->st.id, p->st.name, p->st.gpa);
         
         int i = p->st.wish;
-        if (i >= 0 && i < n && schools[i].free_places > 0) {
+        if (i >= 0 && i < n && schools[i].free_spots > 0) {
             fprintf(fout, "%s\n", schools[i].name);
-            schools[i].free_places--;
+            schools[i].free_spots--;
         } else {
             fprintf(fout, UNASSIGNED"\n");
         }
