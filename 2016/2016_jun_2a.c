@@ -17,7 +17,7 @@ typedef struct elem {
     char email[EMAIL_LEN];
     int  logon;
     int  total;
-    struct elem* next;
+    struct elem *next;
 } Elem;
 
 Elem *read_list(FILE *fp)

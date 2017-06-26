@@ -28,11 +28,9 @@ Board read_board(int m, int n)
 
         for (int j = 0; j < n; j++) {
             char c = getchar();
-            if (!strchr(PIECES, c)) { // Trazi znak u stringu i vraca pokazivac
-                j--;
-                continue;
-            }
-            board.squares[i][j] = c;
+            if (strchr(PIECES, c)) // Trazi znak u stringu i vraca pokazivac
+                board.squares[i][j] = c;
+            else j--;
         }
     }
 
