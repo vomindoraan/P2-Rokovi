@@ -1,6 +1,6 @@
 # P2-Rokovi
 
-Rešeni zadaci iz C sa rokova iz Programiranja 2 na ETF-u
+Rešeni zadaci iz jezika C sa rokova iz Programiranja 2 na ETF-u
 
 ## O skraćenicama
 
@@ -85,9 +85,9 @@ Mala je verovatnoća da se ovo desi, ali u tom slučaju samo treba pisati vitič
 
 ### [`puts`](http://www.cplusplus.com/reference/cstdio/puts/) / [`fputs`](http://www.cplusplus.com/reference/cstdio/fputs/)
 
-Funkcija `puts` ispisuje string na standardni izlaz i prelazi u novi red. `puts("Neuspesna alokacija");` je, dakle, isto što i `printf("Neuspesna alokacija\n");`, samo što je malo brže za pisanje i ne mora se voditi računa ako se ispusuju znaci `%` (`puts` nema formatiranje). 
+Funkcija `puts` ispisuje string na standardni izlaz i prelazi u novi red. `puts("Neuspesna alokacija");` je, dakle, isto što i `printf("Neuspesna alokacija\n");`, samo što je malo brže za pisanje i ne može doći do slučajne greške ako se ispusuju znaci `%` (`puts` nema formatiranje).
 
-`fputs` radi sličnu stvar, samo što umesto na izlaz ispisuje string u datoteku koja se zadaje kao drugi argument. Dakle, <code>fputs("Neuspesna alokacija", [stderr](http://www.cplusplus.com/reference/cstdio/stderr/))</code> umesto na standardni izlaz ispisuje poruku na izlaz za greške (mada to nije toliko bitno za zadatke), dok `fputs("poyy", fp)` upisuje string u otvorenu datoteku na koju pokazuje `fp`.
+`fputs` radi sličnu stvar, samo što umesto na izlaz ispisuje string u datoteku koja se zadaje kao drugi argument. Dakle, <code>fputs("Neuspesna alokacija", [stderr](http://www.cplusplus.com/reference/cstdio/stderr/))</code> umesto na standardni izlaz ispisuje poruku na izlaz za greške (mada to nije toliko bitno za zadatke), dok `fputs("neki string\n", fp)` upisuje string u otvorenu datoteku na koju pokazuje `fp`.
 
 ### <code>[perror](http://www.cplusplus.com/reference/cstdio/perror/)(NULL)</code>
 
@@ -117,10 +117,10 @@ Po standardu jezika C postoje dva ispravna potpisa za glavni program:
 1. `int main(void)` – bez argumenata komandne linije;
 2. `int main(int argc, char *argv[])` – sa argumentima komandne linije.
 
-Pritom vredi naglasiti da imena parametara `argc` i `argv` nisu ni na koji način posebna i da se oni mogu zvati bilo kako, dokle god su im tipovi `int` i `char*[]` (odnosno `char**`), respektivno. Dakle, i `int main(int n, char **a)` je sasvim ispravan potpis.
+Pritom vredi naglasiti da imena parametara `argc` i `argv` nisu ni na koji način posebna i da se oni mogu zvati bilo kako, dokle god su im tipovi `int` i `char*[]` (odnosno `char**`), respektivno. Dakle, i `int main(int n, char **a)` je sasvim ispravan potpis glavnog programa.
 
 Prema tome, varijante `void main()` ili ne daj bože samo `main()` **nisu ispravne** i ne treba tako pisati. Razlozi zašto prevodilac ovo dozvoljava su istorijski (davno, pre standardizacije C-a, se pisalo ovako i na još par načina), ali tome nije mesto u današnjem kodu. Mada ne iznađuje me da Katedra i dalje ovako piše.
 
 Što se tiče potpisa `int main()` i on može proći kao prigodna zamena za 1. varijantu, ali postoji mala razlika: u C-u potpis `(void)` znači da funkcija _ne prima_ argumente, dok `()` znači da prima _proizvoljan broj_ argumenata. Prva varijanta je bolja jer je eksplicitnija.
 
-Povratna vrednost glavnog programa je tipa `int` zato što preko nje programi javljaju okruženju da li su se uspešno izvršili (0 – uspešno; ≠0 – neuspešno, vrednost predstavlja kod greške). Međutim, `return 0` na kraju `main`-a se ne mora pisati jer se po standardu podrazumeva, tako da se ništa ne gubi prelaskom sa `void` na `int`.
+Povratna vrednost glavnog programa je tipa `int` zato što preko nje programi javljaju okruženju da li su se uspešno izvršili (0 – uspešno; ≠0 – neuspešno, a vrednost predstavlja kod greške). Međutim, `return 0` na kraju `main`-a se ne mora pisati jer se po standardu podrazumeva.
