@@ -20,7 +20,7 @@ void read_activities(Elem **plist, FILE *fin)
     unsigned sh, sm, fh, fm;
     char buf[BUF_LEN];
 
-    while (fscanf(fin, "%u:%u-%u:%u %80[^\r\n]", &sh, &sm, &fh, &fm, buf) == 5) {
+    while (fscanf(fin, "%u:%u-%u:%u %80[^\n]", &sh, &sm, &fh, &fm, buf) == 5) {
         Elem *p = malloc(sizeof *p), *curr, *prev;
         ALLOC_CHECK(p);
         p->start = sh * 60 + sm;
