@@ -20,7 +20,7 @@ DistInfo findFarthest(Point *a, unsigned n)
 
     for (i = 0; i < n-1; ++i) {
         for (j = i+1; j < n; ++j) {
-            double dx = a[i].x - a[j].x, dy = a[i].y-a[j].y, dz = a[i].z-a[j].z;
+            double dx = a[i].x-a[j].x, dy = a[i].y-a[j].y, dz = a[i].z-a[j].z;
             double dist = sqrt(dx*dx + dy*dy + dz*dz);
 
             if (dist > di.dist) {
