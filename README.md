@@ -74,7 +74,7 @@ Mali nedostatak ovih makroa je da se zbog svog oblika ne smeju naći unutar krat
 ```C
 if (uslov)
     ALLOC_CHECK(p = malloc(sizeof *p));
-else // Odnosi se na if u makrou, ne na `if (uslov)`
+else  // Odnosi se na if u makrou, ne na `if (uslov)`
     puts("Nije uslov");
 ```
 
@@ -102,9 +102,9 @@ Ove dve operacije rade isto (daju veličinu u bajtovima onoga na šta `p` pokazu
 Alociranje niza od 10 brojeva onda izgleda ovako: `int *niz = malloc(10 * sizeof *niz);` ili `int *niz = calloc(10, sizeof *niz);`, dok se matrice formiraju na sledeći način:
 
 ```C
-int **mat = malloc(m * sizeof *mat);   // *mat daje tip int *
+int **mat  = calloc(m, sizeof *mat);  // *mat daje tip int *
 for (i = 0; i < m; i++) {
-    mat[i] = malloc(n * sizeof **mat); // **mat daje tip int
+    mat[i] = calloc(n, sizeof **mat);  // **mat daje tip int
     for (j = 0; j < n; j++)
         scanf("%d", &mat[i][j]);
 }

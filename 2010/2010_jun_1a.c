@@ -8,7 +8,7 @@
 
 #define ALLOC_CHECK(p) if (!(p)) printf("Neuspesna alokacija\n"), exit(1)
 #define FILE_CHECK(f)  if (!(f)) printf("Neuspesno otvaranje fajla\n"), exit(2)
-//Umesto drugog printf moze perror(NULL) koji automatski stampa prikladnu gresku
+// Umesto drugog printf može perror(NULL) što automatski štampa prikladnu grešku
 
 typedef struct elem {
     char reg[REG_LEN];
@@ -48,7 +48,7 @@ Elem *read_cars(FILE *file)
 
         p->name[i] = '\0';
         p->name = realloc(p->name, i+1);
-        // ALLOC_CHECK nije potreban jer se skracuje
+        // ALLOC_CHECK nije potreban jer se skraćuje
 
         if (!list) {
             list = p;

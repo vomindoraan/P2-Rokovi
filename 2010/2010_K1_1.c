@@ -8,7 +8,7 @@
 
 #define SEED_RNG srand(time(NULL))
 
-/* Vraca slucajan ceo broj u opsegu [LOW, HIGH] */
+/* Vraća pseudoslučajan ceo broj u opsegu [LOW, HIGH] */
 int rand100(void)
 {
     return rand() / (double)RAND_MAX * (HIGH-LOW) + LOW;

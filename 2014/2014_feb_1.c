@@ -10,17 +10,17 @@
 #define NUM_LEN     11
 #define MAX_ENTRIES 300
 
-// Stampa gresku, prekida program
+// Štampa gresku, prekida program
 #define IO_ERROR(f) perror(f), exit(1)
 
-// Otvara fajl, vrsi proveru, izlazi po potrebi
+// Otvara fajl, vrši proveru, izlazi po potrebi
 #define ASSIGN(p, f, m) if (!((p) = fopen(f, m))) IO_ERROR(f)
  
 typedef struct entry {
     char name[NAME_LEN], num[NUM_LEN];
 } Entry;
 
-// Dovoljan je niz jer pise maks. 300 unosa, ne treba lista
+// Dovoljan je niz jer piše maks. 300 unosa, ne treba lista
 typedef Entry Phonebook[MAX_ENTRIES];
 
 int read_phonebook(Phonebook pb)
@@ -30,7 +30,7 @@ int read_phonebook(Phonebook pb)
 
     ASSIGN(pb_file, PHONEBOOK_FILE, "rb");
 
-    // Ucitava zapise u niz, vraca broj uspesno procitanih zapisa
+    // Učitava zapise u niz, vraća broj uspešno pročitanih zapisa
     n = fread(pb, sizeof(Entry), MAX_ENTRIES, pb_file);
 
     fclose(pb_file);
@@ -59,16 +59,16 @@ void process_input(Phonebook pb, int n)
 
     while ((c = fgetc(input)) != EOF) {
         if (c != '[') {
-            fputc(c, output); // Ako znak nije [, samo ga prepisuje
+            fputc(c, output);  // Ako znak nije [, samo ga prepisuje
         } else {
-            // Cita najvise 30 znakova ili do prvog ] i pamti to u 'name'
+            // Čita najviše 30 znakova ili do prvog ] i pamti to u `name`
             fscanf(input, "%30[^]]]", name);
 
             num = get_num_for(pb, n, name);
             if (num) {
-                fprintf(output, "%s", num);    // Broj postoji, ispisi ga 
+                fprintf(output, "%s", num);  // Broj postoji, ispiši ga 
             } else {
-                fprintf(output, "[%s]", name); // U supr. vrati ime i zagrade
+                fprintf(output, "[%s]", name);  // U supr. ispiši ime i zagrade
             }
         }
     }

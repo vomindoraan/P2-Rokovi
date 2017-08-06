@@ -6,10 +6,10 @@
 
 bool is_palindrome(unsigned x)
 {
-    unsigned i, j, n = 8 * sizeof x; // Broj bita unsigned x
+    unsigned i, j, n = 8 * sizeof x;  // Broj bita unsigned x
 
     for (i = 1 << n-1, j = 1; i > j; i >>= 1, j <<= 1)
-        if (!(x & i) != !(x & j)) // Proverava da li su biti logicki razliciti
+        if (!(x & i) != !(x & j))  // Proverava da li su biti logički različiti
             return false;
 
     return true;
@@ -29,7 +29,7 @@ int main(void)
             ALLOC_CHECK(a);
         }
 
-    // Moze i da se skrati na pravu duzinu sa a = realloc(a, n * sizeof(*a));
+    // Može i da se skrati na pravu dužinu sa a = realloc(a, n * sizeof(*a));
 
     puts("Bitski palindromi su:");
     for (i = 0; i < n; i++)

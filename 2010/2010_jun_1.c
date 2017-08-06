@@ -26,16 +26,17 @@ Elem *read_cars(FILE *file)
         }
 
         if (fscanf(file, "%s %[^\n]", new->reg, new->name) != 2) {
-            free(new); // Kada se dodje do kraja, oslobadja neiskorisceni cvor
+            free(new);  // Kada se dođe do kraja, oslobađa neiskorišćeni čvor
             return head;
         }
-        // Da bi se sprecilo prekoracenje duz. stringa, format je mogao glasiti
-        // "%6s %100[^\n]" (ovo [^\n] znaci "citaj string do kraja reda"). Ali
-        // posto 6 i 100 vec postoje gore u konstantama, uz odgovarajuci makroe
+        // Da bi se sprečilo prekoračenje duž. stringa, format je mogao glasiti
+        // "%6s %100[^\n]" (ovo [^\n] znači "čitaj string do kraja reda"). Ali
+        // pošto 6 i 100 već postoje gore u konstantama, uz odgovarajuće makroe
         // #define S_(x) #x
         // #define S(x)  S_(x)
-        // koji pretvaraju simbolicku konstantu u string, format je mogao biti:
-        // "%" S(REG_LEN) "s %" S(NAME_LEN) "[^\n]" sto je isto "%6s %100[^\n]"
+        // koji pretvaraju simboličku konstantu u string, format je mogao biti:
+        // "%" S(REG_LEN) "s %" S(NAME_LEN) "[^\n]"
+        // što je isto kao "%6s %100[^\n]".
 
         new->km = 0;
         new->next = NULL;

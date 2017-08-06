@@ -10,7 +10,7 @@
 typedef struct {
     int  free_spots;
     char name[NAME_LEN];
-    // Ne mora se cuvati redni broj jer je sam indeks skole u nizu redni broj
+    // Ne mora se čuvati redni broj jer je sam indeks škole u nizu redni broj
 } School;
 
 typedef School SchoolArray[MAX_SCHOOLS];
@@ -35,7 +35,7 @@ int read_schools(SchoolArray schools, FILE *fin)
     return i;
 }
 
-// Ubacuje novi cvor u listu sortirano po zelji, pa po proseku, pa po br.prijave
+// Ubacuje novi čvor u listu uređeno po želji, pa po proseku, pa po br. prijave
 StudentNode *insert_node(StudentNode *head, StudentNode *node)
 {
     StudentNode *p = head, *prev = NULL;

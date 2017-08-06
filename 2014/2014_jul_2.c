@@ -8,7 +8,7 @@
 #define ALLOC_CHECK(p) if (!(p)) fputs("Neuspesna alokacija", stderr), exit(1)
 #define FILE_CHECK(f)  if (!(f)) perror(NULL), exit(2)
 
-// Za platforme koje nemaju ugradjene min i max
+// Za platforme koje nemaju ugrađene min i max
 #define min(a, b) (((x) < (y)) ? (x) : (y))
 #define max(a, b) (((x) > (y)) ? (x) : (y))
 
@@ -36,10 +36,10 @@ Node *read_wordlist(FILE *fp)
 
     while ((c = fgetc(fp)) != EOF) {
         if (isalpha(c)) {
-            word[i++] = tolower(c); // Pamti kao sva mala slova
+            word[i++] = tolower(c);  // Pamti kao sva mala slova
             continue;
         } else if (i == 0)
-            continue; // Preskace uzastopne razmake/interpunkciju
+            continue;  // Preskače uzastopne razmake/interpunkciju
 
         word[i] = '\0';
         i = 0;
@@ -79,7 +79,7 @@ void compare(Node *list1, Node *list2)
         n2  += max(-dn, 0);
         n12 += min(p1->n, p2->n);
 
-        p2->n = 0; // Sprecava ponovno dodavanje u drugoj petlji
+        p2->n = 0;  // Sprečava ponovno dodavanje u drugoj petlji
     }
 
     for (Node *p2 = list2; p2; p2 = p2->next)

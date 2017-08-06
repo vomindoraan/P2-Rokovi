@@ -59,7 +59,7 @@ int main(void)
     char **black = read(m, n);
 
     printf("Uneti boju [b/c]: ");
-    switch (getchar(), getchar()) { // Guta '\n' viska
+    switch (getchar(), getchar()) {  // Guta '\n' viška
     case 'b': solve(white, black, m, n); break;
     case 'c': solve(black, white, m, n); break;
     }

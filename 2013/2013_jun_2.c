@@ -19,7 +19,7 @@ int duration(Playlist *elem)
     return elem->min * 60 + elem->sec;
 }
 
-// Ubacuje u listu u rastucem poretku (** jer se glava moze promeniti)
+// Ubacuje u listu u rastućem poretku (** jer se glava može promeniti)
 void insert(Playlist **phead, Playlist *elem)
 {
     Playlist *prev = NULL, *p = *phead;
@@ -43,11 +43,11 @@ Playlist *read_playlist(FILE *fin)
         char *last_space = strrchr(line, ' ');
         if (!last_space) break;
 
-        Playlist *p = calloc(1, sizeof *p); // name="", next=NULL
+        Playlist *p = calloc(1, sizeof *p);  // name="", next=NULL
         ALLOC_CHECK(p);
 
-        strncat(p->name, line, last_space-line); // Prepisuje ime do posl razmaka
-        sscanf(last_space, "%d:%d", &p->min, &p->sec); // Izvlaci vreme
+        strncat(p->name, line, last_space-line);  // Prepiše ime do posl razmaka
+        sscanf(last_space, "%d:%d", &p->min, &p->sec);  // Izvlači vreme
 
         insert(&head, p);
     }
@@ -72,14 +72,14 @@ int main(int argc, char *argv[])
     FILE_CHECK(fin  = fopen(argv[1], "r"));
     FILE_CHECK(fout = fopen(argv[2], "w"));
 
-    Playlist *list = read_playlist(fin); // Ucita uredjeno rastuce po trajanju
+    Playlist *list = read_playlist(fin);  // Učita uređeno rastuće po trajanju
 
     int length;
     printf("Uneti novu duzinu: ");
     scanf("%d", &length);
 
-    // Posto je lista uredjena rastuce, ne treba ni praviti drugu listu, vec se
-    // samo prolazi i ispisuju se elementi dok se ne predje zadata duzina
+    // Pošto je lista uređena rastuće, ne treba ni praviti drugu listu, već se
+    // samo prolazi i ispisuju se elementi dok se ne pređe zadata dužina
     Playlist *p = list;
     while (p && (length -= duration(p)) >= 0) {
         fprintf(fout, "%s %2d:%2d\n", p->name, p->min, p->sec);

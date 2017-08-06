@@ -17,7 +17,7 @@ const char *titles[] = {
     "docent", "vanredni profesor", "redovni profesor"
 };
 
-typedef char name_t[NAME_LEN];  // Olaksica da ne bih svuda pisao niz i duzinu
+typedef char name_t[NAME_LEN];  // Olakšica da ne bih svuda pisao niz i dužinu
 
 typedef struct elem {
     name_t first;
@@ -26,21 +26,21 @@ typedef struct elem {
     struct elem *next;
 } Elem;
 
-// Nalazi autora sa datim imenom i prezimenom i vraca pok. na taj element,
+// Nalazi autora sa datim imenom i prezimenom i vraća pok. na taj element,
 // odnosno NULL ako autor ne postoji ili je lista prazna
 Elem *list_find(Elem *list, name_t first, name_t last)
 {
     Elem *p = list;
     while (p) {
         if (!strcmp(p->first, first) && !strcmp(p->last, last)) {
-            return p;   // Stringovi jednaki
+            return p;  // Stringovi jednaki
         }
         p = p->next;
     }
     return NULL;
 }
 
-// Brise listu
+// Briše listu
 void list_delete(Elem *list)
 {
     while (list) {
@@ -50,15 +50,15 @@ void list_delete(Elem *list)
     }
 }
 
-// Ucitava autore iz datoteke u listu, vraca pok. na pocetak liste, odnosno NULL
+// Učitava autore iz datoteke u listu; vraća pok. na početak liste, odnosno NULL
 // ako je datoteka prazna
 Elem *read_authors(FILE *fin)
 {
     Elem *list = NULL, *tail = NULL;
     int n, i, c;
 
-    // fscanf vraca broj uspesno procitanih podataka, u ovom slucaju 1
-    // Ako ne uspe moze vratiti 0 ili -1 (EOF) ako dodje do kraja fajla
+    // fscanf vraća broj uspešno pročitanih podataka, u ovom slučaju 1
+    // Ako ne uspe može vratiti 0, ili EOF (-1) ako dođe do kraja fajla
     while (fscanf(fin, "%d", &n) == 1) {
         for (i = 0; i < n; ++i) {
             name_t first, last;
@@ -68,13 +68,13 @@ Elem *read_authors(FILE *fin)
             author = list_find(list, first, last);
 
             if (author) {
-                author->pts += POINTS(n);   // Azuriranje poena
+                author->pts += POINTS(n);  // Ažuriranje poena
                 continue;
             }
 
-            ALLOC_CHECK(p = malloc(sizeof *p)); // Novi autor
+            ALLOC_CHECK(p = malloc(sizeof *p));  // Novi autor
             strcpy(p->first, first);
-            strcpy(p->last, last);  // Obavezno strcpy, ne moze obicna dodela
+            strcpy(p->last, last);  // Obavezno strcpy, ne može obična dodela
             p->pts = POINTS(n);
             p->next = NULL;
 
@@ -86,7 +86,7 @@ Elem *read_authors(FILE *fin)
             tail = p;
         }
 
-        while ((c = fgetc(fin)) != '\n' && c != EOF);   // Cita do kraja reda
+        while ((c = fgetc(fin)) != '\n' && c != EOF);  // Čita do kraja reda
     }
 
     return list;
@@ -96,17 +96,17 @@ Elem *read_authors(FILE *fin)
 void write_authors(FILE *fout, Elem *list)
 {
     while (list) {
-        const char *title = NULL;   // Pok. na konst. podatak; pok. nije konst.
-        int k = sizeof titles / sizeof *titles;   // Duzina niza sa zvanjima
+        const char *title = NULL;  // Pok. na konst. podatak; pok. nije konst.
+        int k = sizeof titles / sizeof *titles;  // Dužina niza sa zvanjima
 
-        while (k--) {   // Poredi redom poene sa 3,2,1 dok ne nadje zvanje
+        while (k--) {  // Poredi redom poene sa 3,2,1 dok ne nađe zvanje
             if (list->pts >= k) {
                 title = titles[k-1];
                 break;
             }
         }
 
-        if (title) {    // Ako je zvanje NULL, ne treba ispisivati
+        if (title) {  // Ako je zvanje NULL, ne treba ispisivati
             fprintf(fout, "%s %s %s\n", list->first, list->last, title);
         }
 

@@ -28,7 +28,7 @@ Board read_board(int m, int n)
 
         for (int j = 0; j < n; j++) {
             char c = getchar();
-            if (strchr(PIECES, c)) // Trazi znak u stringu i vraca pokazivac
+            if (strchr(PIECES, c))  // Traži znak u stringu i vraća pokazivač
                 board.squares[i][j] = c;
             else j--;
         }
@@ -51,7 +51,7 @@ Chess read_chess(void)
     puts("Uneti crne figure:");
     chess.black = read_board(m, n);
 
-    fseek(stdin, 0, SEEK_END); // Cisti ulaz od viska unosa
+    fseek(stdin, 0, SEEK_END);  // Čisti ulaz od viška unosa
     return chess;
 }
 
@@ -75,7 +75,7 @@ void check(Board board, int i, int j)
     }
 }
 
-void solve(Chess chess, int side) // 1=white, 0=black
+void solve(Chess chess, int side)  // 1=white, 0=black
 {
     Board player = side ? chess.white : chess.black,
           enemy  = side ? chess.black : chess.white;
@@ -85,10 +85,10 @@ void solve(Chess chess, int side) // 1=white, 0=black
             if (player.squares[i][j] == KNIGHT) {
                 printf("\nSkakac [%d,%d] moze da pojede:\n", i, j);
 
-                check(enemy, i-1, j-2); check(enemy, i-2, j-1); // Gore levo
-                check(enemy, i-2, j+1); check(enemy, i-1, j+2); // Gore desno
-                check(enemy, i+1, j+2); check(enemy, i+2, j+1); // Dole desno
-                check(enemy, i+2, j-1); check(enemy, i+1, j-2); // Dole levo
+                check(enemy, i-1, j-2); check(enemy, i-2, j-1);  // Gore levo
+                check(enemy, i-2, j+1); check(enemy, i-1, j+2);  // Gore desno
+                check(enemy, i+1, j+2); check(enemy, i+2, j+1);  // Dole desno
+                check(enemy, i+2, j-1); check(enemy, i+1, j-2);  // Dole levo
             }
 }
 
@@ -100,7 +100,7 @@ int main(void)
     free_chess(chess);
 }
 
-// Unos boje se moze bolje uraditi ovako (u tom slucaju solve prima 2x Board):
+// Unos boje se može bolje uraditi ovako (u tom slučaju solve prima 2× Board):
 // while (1) {
 //     puts("Uneti boju [b/c]:");
 //     switch (getchar()) {

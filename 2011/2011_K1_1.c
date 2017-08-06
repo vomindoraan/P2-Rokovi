@@ -9,16 +9,16 @@
 #define SEED_RNG srand(time(NULL))
 #define SQR(x)   (x)*(x)
 
-/* Vraca pseudoslucajan ceo broj u intervalu [min, max] */
+/* Vraća pseudoslučajan ceo broj u opsegu [min, max] */
 int rand_int(int min, int max)
 {
     return rand() / (double)RAND_MAX * (max-min) + min;
 }
 
 /*
- * Proverava da li je n Fibonacijev broj.
- * Broj n pripada Fibonacijevom nizu (1, 1, 2, 3, 5, ...) ako je bar jedan od
- * izraza 5n^2 - 4 i 5n^2 + 4 koren nekog prirodnog broja (Bineova formula).
+ * Proverava da li je n Fibonačijev broj
+ * Broj n pripada Fibonačijevom nizu (1, 1, 2, 3, 5, ...) ako je bar jedan od
+ * izraza 5n²-4 i 5n²+4 koren nekog prirodnog broja (Bineova formula)
  */
 int check_fib(int n)
 {

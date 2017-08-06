@@ -10,7 +10,7 @@
 
 #define MAX(a, b)      (((a) > (b)) ? (a) : (b))
 #define ALLOC_CHECK(p) if (!(p)) fputs("Neuspesna alokacija", stderr), exit(1)
-#define FILE_CHECK(f)  if (!(f)) perror(NULL), exit(2) // perror stampa poruku
+#define FILE_CHECK(f)  if (!(f)) perror(NULL), exit(2)  // perror štampa poruku
 
 typedef struct elem {
     char name[NAME_LEN];
@@ -25,7 +25,7 @@ Elem *read_list(FILE *fp)
     Elem *head = NULL, *tail;
     char name[NAME_LEN], email[EMAIL_LEN];
 
-    // fscanf vraca broj uspesno procitanih vrednosti
+    // fscanf vraća broj uspešno pročitanih vrednosti
     while (fscanf(fp, "%s %s", name, email) == 2) {
         Elem *p = malloc(sizeof *p);
         ALLOC_CHECK(p);
@@ -52,9 +52,9 @@ void update_list(Elem *list, FILE *fp)
         Elem *p = list;
         while (strcmp(p->email, email)) p = p->next;
 
-        if (!p) continue; // Korisnik ne postoji u listi
+        if (!p) continue;  // Korisnik ne postoji u listi
 
-        /**/ if (action == 'p') // Korisnik nadjen
+        /**/ if (action == 'p')  // Korisnik nađen
             p->logon = time;
         else if (action == 'o')
             p->total += time - p->logon;
@@ -81,12 +81,12 @@ int main(void)
 
     int max_time = 0;
     for (Elem *p = list; p; p = p->next)
-        max_time = MAX(max_time, p->total); // Nalazi najvece vreme
+        max_time = MAX(max_time, p->total);  // Nalazi najveće vreme
 
     for (Elem *p = list; p; p = p->next)
         if (p->total == max_time) {
             p->name[0] = toupper(p->name[0]);
-            puts(p->name); // Ispisuje sve sa tim vremenom (moze i samo 1)
+            puts(p->name);  // Ispisuje sve sa tim vremenom (može i samo 1)
         }
 
     free_list(&list);

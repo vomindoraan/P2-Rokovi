@@ -1,4 +1,4 @@
-#include <stdbool.h> // bool, true, false
+#include <stdbool.h>  // bool, true, false
 #include <stdio.h>
 #include <stdlib.h>
 
