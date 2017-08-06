@@ -5,11 +5,11 @@
 
 char **read(int m, int n)
 {
-    char **mat = malloc(m * sizeof(*mat));
+    char **mat = calloc(m, sizeof *mat);
     ALLOC_CHECK(mat);
 
     for (int i = 0; i < m; i++) {
-        mat[i] = malloc(n * sizeof(**mat));
+        mat[i] = calloc(n, sizeof **mat);
         ALLOC_CHECK(mat[i]);
 
         for (int j = 0; j < n; j++)

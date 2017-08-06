@@ -38,11 +38,11 @@ int main(int argc, char *argv[])
     }
     n = atoi(argv[1]);
 
-    mat = malloc(n * sizeof(*mat));
+    mat = calloc(n, sizeof *mat);
     ALLOC_CHECK(mat);
 
     for (i = 0; i < n; ++i) {
-        mat[i] = malloc(n * sizeof(**mat));
+        mat[i] = calloc(n, sizeof **mat);
         ALLOC_CHECK(mat[i]);
         
         printf("\nUneti elemente %d. vrste:\n", i);
