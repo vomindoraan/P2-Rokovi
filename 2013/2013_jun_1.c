@@ -2,8 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define ALLOC_CHECK(p) if (!(p)) fputs("Neuspesna alokacija", stderr), exit(1)
-
 typedef struct point {
     double x, y, z;
 } Point;
@@ -46,7 +44,11 @@ int main(void)
         return 2;
     }
 
-    ALLOC_CHECK(pts = malloc(n * sizeof(*pts)));
+    pts = malloc(n * sizeof *pts);
+    if (!pts) {
+        fprintf(stderr, "Neuspesna alokacija\n");
+        return 1;
+    }
     
     printf("Uneti tacke (x y z):\n");
     for (i = 0; i < n; ++i) {
