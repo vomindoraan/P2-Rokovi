@@ -5,7 +5,8 @@
 #define REG_LEN  6
 #define NAME_LEN 100
 
-#define FILE_CHECK(f) if (!(f)) perror(NULL), exit(1)
+#define ALLOC_CHECK(p) if (!(p)) fputs("Neuspesna alokacija", stderr), exit(1)
+#define FILE_CHECK(f)  if (!(f)) perror(NULL), exit(2)
 
 typedef struct elem {
     char reg[REG_LEN+1];
@@ -20,10 +21,7 @@ Elem *read_cars(FILE *file)
 
     while (1) {
         Elem *new = malloc(sizeof(Elem));
-        if (!new) {
-            fputs("Neuspesna alokacija", stderr);
-            exit(2);
-        }
+        ALLOC_CHECK(new);
 
         if (fscanf(file, "%s %[^\n]", new->reg, new->name) != 2) {
             free(new);  // Kada se dođe do kraja, oslobađa neiskorišćeni čvor
