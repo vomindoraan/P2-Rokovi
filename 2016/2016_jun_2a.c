@@ -8,9 +8,8 @@
 #define NAME_LEN   21
 #define EMAIL_LEN  41
 
-#define MAX(a, b)      (((a) > (b)) ? (a) : (b))
-#define ALLOC_CHECK(p) if (!(p)) fputs("Neuspesna alokacija", stderr), exit(1)
-#define FILE_CHECK(f)  if (!(f)) perror(NULL), exit(2)  // perror štampa poruku
+#define MAX(a, b)     (((a) > (b)) ? (a) : (b))
+#define FILE_CHECK(f) if (!(f)) perror(NULL), exit(1)  // perror štampa poruku
 
 typedef struct elem {
     char name[NAME_LEN];
@@ -28,7 +27,10 @@ Elem *read_list(FILE *fp)
     // fscanf vraća broj uspešno pročitanih vrednosti
     while (fscanf(fp, "%s %s", name, email) == 2) {
         Elem *p = malloc(sizeof *p);
-        ALLOC_CHECK(p);
+        if (!p) {
+            fputs("Neuspesna alokacija", stderr);
+            exit(2);
+        }
 
         strcpy(p->name, name);
         strcpy(p->email, email);

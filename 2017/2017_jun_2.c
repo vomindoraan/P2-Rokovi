@@ -5,8 +5,7 @@
 #define NAME_LEN    31
 #define UNASSIGNED  "NEUPISAN"
 
-#define ALLOC_CHECK(p) if (!(p)) fputs("Neuspesna alokacija", stderr), exit(1)
-#define FILE_CHECK(f)  if (!(f)) perror(NULL), exit(2)
+#define FILE_CHECK(f) if (!(f)) perror(NULL), exit(1)
 
 typedef struct {
     int  free_spots;
@@ -65,7 +64,10 @@ StudentNode *read_students(FILE *fin)
     
     while (fread(&st, sizeof st, 1, fin)) {
         StudentNode *node = malloc(sizeof *node);
-        ALLOC_CHECK(node);
+        if (!node) {
+            fputs("Neuspesna alokacija", stderr);
+            exit(2);
+        }
         
         node->st = st;
         node->next = NULL;

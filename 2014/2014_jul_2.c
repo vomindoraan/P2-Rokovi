@@ -5,8 +5,7 @@
 
 #define WORD_LEN 30
 
-#define ALLOC_CHECK(p) if (!(p)) fputs("Neuspesna alokacija", stderr), exit(1)
-#define FILE_CHECK(f)  if (!(f)) perror(NULL), exit(2)
+#define FILE_CHECK(f) if (!(f)) perror(NULL), exit(1)
 
 // Za platforme koje nemaju ugrađene min i max
 #define min(a, b) (((x) < (y)) ? (x) : (y))
@@ -50,7 +49,12 @@ Node *read_wordlist(FILE *fp)
             continue;
         }
 
-        ALLOC_CHECK(node = malloc(sizeof *node));
+        node = malloc(sizeof *node);
+        if (!node) {
+            fputs("Neuspesna alokacija", stderr);
+            exit(2);
+        }
+
         strcpy(node->word, word);
         node->n = 1;
         node->next = NULL;
