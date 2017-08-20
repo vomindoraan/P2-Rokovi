@@ -2,11 +2,12 @@
 
 Rešeni zadaci iz jezika C sa rokova iz Programiranja 2 na ETF-u
 
+
 ## O skraćenicama
 
 ### Motivacija
 
-U svim ispitnim zadacima gde se javlja upravljanje dinamičkom memorijom ili datotekama (a to su maltene svi zadaci) potrebno je pisati  delove koda za proveru uspešnosti alokacije ili otvaranja datoteke iznova i iznova. To izgleda npr. ovako:
+U svim ispitnim zadacima gde se javlja upravljanje dinamičkom memorijom ili datotekama (a to su maltene svi zadaci) potrebno je pisati iste delove koda za proveru uspešnosti alokacije ili otvaranja datoteke iznova i iznova. To izgleda npr. ovako:
 
 ```C
 Elem *p = malloc(sizeof *p);
@@ -41,16 +42,16 @@ Pomenuti makroi se mogu definisati na sledeći način:
 #define ALLOC_CHECK(p) if (!(p)) puts("Neuspesna alokacija"), exit(1)
 #define FILE_CHECK(f)  if (!(f)) perror(NULL), exit(2)
 ```
- 
+
 Ako je ostatak koda na srpskom, mogu se nazvati i `PROV_MEM` i `PROV_DAT`, respektivno, ili bilo kako drugačije. Manje poznate funkcije koje se ovde koriste su objašnjene [ispod](#ostalo).
- 
+
 Na ovaj način, kada pretprocesor uradi tekstualnu zamenu, naredba `ALLOC_CHECK(p = malloc(sizeof *p));` postane `if (!(p = malloc(sizeof *p))) puts("Neuspesna alokacija"), exit(1);` što je ekvivalentno velikom `if` bloku odozgo; odnosno:
 
 1. pokuša se alokacija bloka memorije date veličine;
 2. rezultat se dodeli u pokazivačku promenljivu;
 3. ako je rezultat nula, ispisuje se poruka i prekida se program.
 
-Isto važi i za makro `FILE_CHECK`, samo je tu u pitanju otvaranje datoteke umesto alokacija. Primetiti da su u makroima zagrade <code>if (!**_(_**p**_)_**)</code> veoma bitne jer bi bez njih tekstualna zamena dala neispravan kod.
+Isto važi i za makro `FILE_CHECK`, samo je tu u pitanju otvaranje datoteke umesto alokacija. Primetiti da su u makroima zagrade <code>if (!**(**p**)**)</code> veoma bitne jer bi bez njih tekstualna zamena dala neispravan kod.
 
 ### `ASSIGN` makro
 
@@ -67,7 +68,7 @@ FILE *fp;
 ASSIGN(fp, "moja_dat.bin", "rb+");
 ```
 
-### Nedostaci
+### Nedostatak
 
 Mali nedostatak ovih makroa je da se zbog svog oblika ne smeju naći unutar kratke `if` naredbe neposredno pre `else` grane. Makro ekspanzija bi u tom slučaju neželjeno izmenila semantiku programa. Primer:
 
@@ -119,8 +120,8 @@ Po standardu jezika C postoje dva ispravna potpisa za glavni program:
 
 Pritom vredi naglasiti da imena parametara `argc` i `argv` nisu ni na koji način posebna i da se oni mogu zvati bilo kako, dokle god su im tipovi `int` i `char*[]` (odnosno `char**`), respektivno. Dakle, i `int main(int n, char **a)` je sasvim ispravan potpis glavnog programa.
 
-Prema tome, varijante `void main()` ili ne daj bože samo `main()` **nisu ispravne** i ne treba tako pisati. Razlozi zašto prevodilac ovo dozvoljava su istorijski (davno, pre standardizacije C-a, se pisalo ovako i na još par načina), ali tome nije mesto u današnjem kodu. Mada ne iznađuje me da Katedra i dalje ovako piše.
+Prema tome, varijante `void main()` ili ne daj bože samo `main()` **nisu ispravne** i ne treba tako pisati. Razlozi zašto prevodilac ovo dozvoljava su istorijski (davno, pre standardizacije C-a, se pisalo ovako i na još par načina), ali tome nije mesto u današnjem kodu. Mada iz nekog razloga na Katedri i dalje ovako pišu.
 
-Što se tiče potpisa `int main()` i on može proći kao prigodna zamena za 1. varijantu, ali postoji mala razlika: u C-u potpis `(void)` znači da funkcija _ne prima_ argumente, dok `()` znači da prima _proizvoljan broj_ argumenata. Prva varijanta je bolja jer je eksplicitnija.
+Što se tiče potpisa `int main()`, i on može proći kao prigodna zamena za 1. varijantu, ali postoji mala razlika: u C-u potpis `(void)` znači da funkcija _ne prima_ argumente, dok `()` znači da prima _proizvoljan broj_ argumenata. Prva varijanta je bolja jer je eksplicitnija.
 
 Povratna vrednost glavnog programa je tipa `int` zato što preko nje programi javljaju okruženju da li su se uspešno izvršili (0 – uspešno; ≠0 – neuspešno, a vrednost predstavlja kod greške). Međutim, `return 0` na kraju `main`-a se ne mora pisati jer se po standardu podrazumeva.
