@@ -7,7 +7,7 @@ Rešeni zadaci iz jezika C sa rokova iz Programiranja 2 na ETF-u
 
 ### Motivacija
 
-U svim ispitnim zadacima gde se javlja upravljanje dinamičkom memorijom ili datotekama (a to su maltene svi zadaci) potrebno je pisati iste delove koda za proveru uspešnosti alokacije ili otvaranja datoteke iznova i iznova. To izgleda npr. ovako:
+U svim ispitnim zadacima gde se javlja rukovanje dinamičkom memorijom ili datotekama (a to su maltene svi zadaci) potrebno je pisati iste delove koda za proveru uspešnosti alokacije ili otvaranja datoteke iznova i iznova. To izgleda npr. ovako:
 
 ```C
 Elem *p = malloc(sizeof *p);
@@ -61,7 +61,7 @@ Otvaranje datoteka se još više može uprostiti ako se uvede makro:
 #define ASSIGN(p, f, m) if (!((p) = fopen(f, m))) perror(f), exit(1)
 ```
 
-Ovaj makro u jednom potezu pozove `fopen` za dato ime i mod, sačuva rezultat u pokazivač i proveri da li je kojim slučajem došlo do greške pri otvaranju, a ako jeste prekine program. Koristi se na sledeći način (slično kao funkcija `Assign` u Paskalu):
+Ovaj makro u jednom potezu pozove `fopen` za dato ime i mod, sačuva rezultat u pokazivač, i proveri da li je kojim slučajem došlo do greške pri otvaranju, a ako jeste prekine program. Koristi se na sledeći način (slično kao funkcija `Assign` u Paskalu):
 
 ```C
 FILE *fp;
@@ -86,9 +86,9 @@ Mala je verovatnoća da se ovo desi, ali u tom slučaju samo treba pisati vitič
 
 ### [`puts`](http://www.cplusplus.com/reference/cstdio/puts/) / [`fputs`](http://www.cplusplus.com/reference/cstdio/fputs/)
 
-Funkcija `puts` ispisuje string na standardni izlaz i prelazi u novi red. `puts("Neuspesna alokacija");` je, dakle, isto što i `printf("Neuspesna alokacija\n");`, samo što je malo brže za pisanje i ne može doći do slučajne greške ako se ispusuju znaci `%` (`puts` nema formatiranje).
+Funkcija `puts` ispisuje string na standardni izlaz i prelazi u novi red. `puts("Neuspesna alokacija");` je, dakle, isto što i `printf("Neuspesna alokacija\n");`, samo što je malo brže za pisanje, i ne može doći do slučajne greške ako se doslovno ispusuju znaci `%`, jer `puts` nema formatiranje.
 
-`fputs` radi sličnu stvar, samo što umesto na izlaz ispisuje string u datoteku koja se zadaje kao drugi argument. Dakle, <code>fputs("Neuspesna alokacija", [stderr](http://www.cplusplus.com/reference/cstdio/stderr/))</code> umesto na standardni izlaz ispisuje poruku na izlaz za greške (mada to nije toliko bitno za zadatke), dok `fputs("neki string\n", fp)` upisuje string u otvorenu datoteku na koju pokazuje `fp`.
+`fputs` radi sličnu stvar, samo što umesto na izlaz ispisuje string u datoteku koja se zadaje kao drugi argument. Dakle, <code>fputs("Neuspesna alokacija", [stderr](http://www.cplusplus.com/reference/cstdio/stderr/))</code> umesto na standardni izlaz ispisuje poruku na izlaz za greške (mada to nije toliko bitno za zadatke), dok `fputs("neki string\n", fp)` upisuje string u otvorenu datoteku na koju pokazuje `fp`. Za razliku od `puts`, ova funkcija sama po sebi ne ispisuje znak za novi red, već on mora biti deo stringa.
 
 ### <code>[perror](http://www.cplusplus.com/reference/cstdio/perror/)(NULL)</code>
 
@@ -120,8 +120,8 @@ Po standardu jezika C postoje dva ispravna potpisa za glavni program:
 
 Pritom vredi naglasiti da imena parametara `argc` i `argv` nisu ni na koji način posebna i da se oni mogu zvati bilo kako, dokle god su im tipovi `int` i `char*[]` (odnosno `char**`), respektivno. Dakle, i `int main(int n, char **a)` je sasvim ispravan potpis glavnog programa.
 
-Prema tome, varijante `void main()` ili ne daj bože samo `main()` **nisu ispravne** i ne treba tako pisati. Razlozi zašto prevodilac ovo dozvoljava su istorijski (davno, pre standardizacije C-a, se pisalo ovako i na još par načina), ali tome nije mesto u današnjem kodu. Mada iz nekog razloga na Katedri i dalje ovako pišu.
+Prema tome, varijante `void main()` ili, ne daj bože, samo `main()` **nisu ispravne** i ne treba tako pisati. Razlozi zašto prevodilac ovo dozvoljava su istorijski (davno, pre standardizacije C-a, se pisalo ovako i na još par načina), ali tome nije mesto u današnjem kodu. Mada iz nekog razloga na Katedri i dalje ovako pišu.
 
 Što se tiče potpisa `int main()`, i on može proći kao prigodna zamena za 1. varijantu, ali postoji mala razlika: u C-u potpis `(void)` znači da funkcija _ne prima_ argumente, dok `()` znači da prima _proizvoljan broj_ argumenata. Prva varijanta je bolja jer je eksplicitnija.
 
-Povratna vrednost glavnog programa je tipa `int` zato što preko nje programi javljaju okruženju da li su se uspešno izvršili (0 – uspešno; ≠0 – neuspešno, a vrednost predstavlja kod greške). Međutim, `return 0` na kraju `main`-a se ne mora pisati jer se po standardu podrazumeva.
+Povratna vrednost glavnog programa je tipa `int` zato što preko nje programi javljaju okruženju da li su se uspešno izvršili (0 – uspešno; ≠0 – neuspešno, a vrednost predstavlja kod greške). Međutim, `return 0;` na kraju `main`-a se ne mora pisati jer se po standardu podrazumeva.
