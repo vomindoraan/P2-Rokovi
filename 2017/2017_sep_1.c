@@ -86,10 +86,9 @@ char **unos(int *pm)
         strcpy(mat[i], str);
     }
 
-    // i je stvarna veličina matrice
-    vel = i;
+    vel = i;  // i je stvarna veličina matrice
     mat = realloc(mat, vel * sizeof *mat);
-    // Ne mora da se proveri alokacija, jer skraćivanje uvek uspeva
+    // Ne mora da se proveri alokacija jer skraćivanje uvek uspeva
 
     *pm = vel;
     return mat;
