@@ -9,8 +9,8 @@
 #define FILE_CHECK(f)  if (!(f)) perror(NULL), exit(2)
 
 // Za platforme koje nemaju ugrađene min i max
-#define min(a, b) (((x) < (y)) ? (x) : (y))
-#define max(a, b) (((x) > (y)) ? (x) : (y))
+#define MIN(a, b) (((a) < (b)) ? (a) : (b))
+#define MAX(a, b) (((a) > (b)) ? (a) : (b))
 
 typedef char word_t[WORD_LEN+1];
 
@@ -30,7 +30,7 @@ Node *find_word(Node *list, word_t word)
 
 Node *read_wordlist(FILE *fp)
 {
-    Node *head = NULL, *tail;
+    Node *list = NULL;
     word_t word;
     char c, i = 0;
 
@@ -44,7 +44,7 @@ Node *read_wordlist(FILE *fp)
         word[i] = '\0';
         i = 0;
 
-        Node *node = find_word(head, word);
+        Node *node = find_word(list, word);
         if (node) {
             node->n++;
             continue;
@@ -53,14 +53,11 @@ Node *read_wordlist(FILE *fp)
         ALLOC_CHECK(node = malloc(sizeof *node));
         strcpy(node->word, word);
         node->n = 1;
-        node->next = NULL;
-
-        if (head) tail->next = node;
-        else      head = node;
-        tail = node;
+        node->next = list;
+        list = node;
     }
 
-    return head;
+    return list;
 }
 
 void compare(Node *list1, Node *list2)
@@ -75,9 +72,9 @@ void compare(Node *list1, Node *list2)
         }
 
         int dn = p1->n - p2->n;
-        n1  += max(dn,  0);
-        n2  += max(-dn, 0);
-        n12 += min(p1->n, p2->n);
+        n1  += MAX(dn,  0);
+        n2  += MAX(-dn, 0);
+        n12 += MIN(p1->n, p2->n);
 
         p2->n = 0;  // Sprečava ponovno dodavanje u drugoj petlji
     }

@@ -6,7 +6,7 @@
 #define DAT_POTR "potrepstine.txt"
 #define DAT_FAKT "faktura.txt"
 
-#define MAX_NAZ 30
+#define MAX_NAZ 31
 
 #define PROV_MEM(p) if (!(p)) fputs("Neuspesna alokacija", stderr), exit(2)
 #define PROV_DAT(f) if (!(f)) perror(NULL), exit(1)
@@ -26,8 +26,8 @@ Elem *ucitaj_listu(FILE *fp)
     float jed_cena;
 
     while (fscanf(fp, "%s%d%f", naziv, &kol, &jed_cena) == 3) {
-        Elem *novi;
-        PROV_MEM(novi = malloc(sizeof *novi));
+        Elem *novi = malloc(sizeof *novi);
+        PROV_MEM(novi);
 
         strcpy(novi->naziv, naziv);
         novi->kol = kol;
