@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define ALLOC_CHECK(p) if (!(p)) printf("Neuspesna alokacija\n"), exit(1)
+#define CHECK_ALLOC(p) if (!(p)) printf("Neuspesna alokacija\n"), exit(1)
 
 int is_prime(int n)
 {
@@ -39,11 +39,11 @@ int main(int argc, char *argv[])
     n = atoi(argv[1]);
 
     mat = calloc(n, sizeof *mat);
-    ALLOC_CHECK(mat);
+    CHECK_ALLOC(mat);
 
     for (i = 0; i < n; ++i) {
         mat[i] = calloc(n, sizeof **mat);
-        ALLOC_CHECK(mat[i]);
+        CHECK_ALLOC(mat[i]);
         
         printf("\nUneti elemente %d. vrste:\n", i);
         for (j = 0; j < n; ++j) {

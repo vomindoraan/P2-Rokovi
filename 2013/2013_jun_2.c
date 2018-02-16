@@ -5,8 +5,8 @@
 #define NAME_LEN 256
 #define LINE_LEN (NAME_LEN+7)
 
-#define ALLOC_CHECK(p) if (!(p)) fputs("Neuspesna alokacija", stderr), exit(1)
-#define FILE_CHECK(f)  if (!(f)) perror(NULL), exit(2)
+#define CHECK_ALLOC(p) if (!(p)) fputs("Neuspesna alokacija", stderr), exit(1)
+#define CHECK_FILE(f)  if (!(f)) perror(NULL), exit(2)
 
 typedef struct elem {
     char name[NAME_LEN];
@@ -44,7 +44,7 @@ Playlist *read_playlist(FILE *fin)
         if (!last_space) break;
 
         Playlist *p = calloc(1, sizeof *p);  // name="", next=NULL
-        ALLOC_CHECK(p);
+        CHECK_ALLOC(p);
 
         strncat(p->name, line, last_space-line);  // Prepiše ime do posl razmaka
         sscanf(last_space, "%d:%d", &p->min, &p->sec);  // Izvlači vreme
@@ -69,8 +69,8 @@ int main(int argc, char *argv[])
     FILE *fin, *fout;
 
     if (argc != 3) return 3;
-    FILE_CHECK(fin  = fopen(argv[1], "r"));
-    FILE_CHECK(fout = fopen(argv[2], "w"));
+    CHECK_FILE(fin  = fopen(argv[1], "r"));
+    CHECK_FILE(fout = fopen(argv[2], "w"));
 
     Playlist *list = read_playlist(fin);  // Učita uređeno rastuće po trajanju
 

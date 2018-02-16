@@ -5,8 +5,8 @@
 
 #define WORD_LEN 30
 
-#define ALLOC_CHECK(p) if (!(p)) fputs("Neuspesna alokacija", stderr), exit(1)
-#define FILE_CHECK(f)  if (!(f)) perror(NULL), exit(2)
+#define CHECK_ALLOC(p) if (!(p)) fputs("Neuspesna alokacija", stderr), exit(1)
+#define CHECK_FILE(f)  if (!(f)) perror(NULL), exit(2)
 
 // Za platforme koje nemaju ugrađene min i max
 #define MIN(a, b) (((a) < (b)) ? (a) : (b))
@@ -50,7 +50,7 @@ Node *read_wordlist(FILE *fp)
             continue;
         }
 
-        ALLOC_CHECK(node = malloc(sizeof *node));
+        CHECK_ALLOC(node = malloc(sizeof *node));
         strcpy(node->word, word);
         node->n = 1;
         node->next = list;
@@ -89,7 +89,7 @@ int main(void)
 {
     FILE *f_orig = fopen("original.txt", "r"),
          *f_copy = fopen("kopija.txt",   "r");
-    FILE_CHECK(f_orig && f_copy);
+    CHECK_FILE(f_orig && f_copy);
 
     Node *list_orig = read_wordlist(f_orig),
          *list_copy = read_wordlist(f_copy);

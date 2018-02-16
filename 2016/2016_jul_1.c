@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define ALLOC_CHECK(p) if (!(p)) puts("Neuspesna alokacija"), exit(1)
+#define CHECK_ALLOC(p) if (!(p)) puts("Neuspesna alokacija"), exit(1)
 
 bool is_palindrome(unsigned x)
 {
@@ -19,14 +19,14 @@ int main(void)
 {
     unsigned size = 10, n = 0, i;
     unsigned *a = malloc(size * sizeof(*a));
-    ALLOC_CHECK(a);
+    CHECK_ALLOC(a);
 
     puts("Uneti niz celih brojeva:");
     while (scanf("%u", &a[n++]))
         if (n == size) {
             size *= 2;
             a = realloc(a, size * sizeof(*a));
-            ALLOC_CHECK(a);
+            CHECK_ALLOC(a);
         }
 
     // Može i da se skrati na pravu dužinu sa a = realloc(a, n * sizeof(*a));

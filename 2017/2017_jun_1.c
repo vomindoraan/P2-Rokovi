@@ -1,16 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define ALLOC_CHECK(p) if (!(p)) printf("Neuspesna alokacija\n"), exit(1)
+#define CHECK_ALLOC(p) if (!(p)) printf("Neuspesna alokacija\n"), exit(1)
 
 char **read(int m, int n)
 {
     char **mat = calloc(m, sizeof *mat);
-    ALLOC_CHECK(mat);
+    CHECK_ALLOC(mat);
 
     for (int i = 0; i < m; i++) {
         mat[i] = calloc(n, sizeof **mat);
-        ALLOC_CHECK(mat[i]);
+        CHECK_ALLOC(mat[i]);
 
         for (int j = 0; j < n; j++)
             do {

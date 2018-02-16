@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define ALLOC_CHECK(p) if (!(p)) puts("Neuspesna alokacija"), exit(1)
+#define CHECK_ALLOC(p) if (!(p)) puts("Neuspesna alokacija"), exit(1)
 
 /* Proverava da li je reč šifrovana */
 bool is_encrypted(char *word)
@@ -36,7 +36,7 @@ int main(void)
     unsigned i = 0, n = 0, total = 0;
 
     word = malloc(size = 10);  // Ne treba sizeof(char) jer je to uvek 1
-    ALLOC_CHECK(word);
+    CHECK_ALLOC(word);
 
     do {
         c = getchar();
@@ -44,7 +44,7 @@ int main(void)
             word[i++] = c;  // Nije kraj reči, ubacuje se znak ...
             if (i == size) {
                 word = realloc(word, size *= 2);  // i realocira po potrebi
-                ALLOC_CHECK(word);
+                CHECK_ALLOC(word);
             }
         } else {
             word[i] = '\0';  // Kraj reči, treba sprovesti obradu
@@ -74,13 +74,13 @@ int main(void)
     unsigned i = 0, n = 0, total = 0;
 
     str = malloc(size = 10);
-    ALLOC_CHECK(str);
+    CHECK_ALLOC(str);
 
     while ((c = getchar()) != '\n') {
         str[i++] = c;
         if (i == size) {
             str = realloc(str, size *= 2);
-            ALLOC_CHECK(str);
+            CHECK_ALLOC(str);
         }
     }
 

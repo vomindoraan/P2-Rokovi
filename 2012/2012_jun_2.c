@@ -6,8 +6,8 @@
 #define FILE_OUT "preklapanja.txt"
 #define BUF_LEN  81
 
-#define ALLOC_CHECK(p) if (!(p)) printf("Neuspesna alokacija\n"), exit(1)
-#define FILE_CHECK(f)  if (!(f)) printf("Neuspesno otvaranje fajla\n"), exit(2)
+#define CHECK_ALLOC(p) if (!(p)) printf("Neuspesna alokacija\n"), exit(1)
+#define CHECK_FILE(f)  if (!(f)) printf("Neuspesno otvaranje fajla\n"), exit(2)
 
 typedef struct elem {
     unsigned start, finish;
@@ -22,7 +22,7 @@ void read_activities(Elem **plist, FILE *fin)
 
     while (fscanf(fin, "%u:%u-%u:%u %80[^\n]", &sh, &sm, &fh, &fm, buf) == 5) {
         Elem *p = malloc(sizeof *p), *curr, *prev;
-        ALLOC_CHECK(p);
+        CHECK_ALLOC(p);
         p->start = sh * 60 + sm;
         p->finish = fh * 60 + fm;
         strcpy(p->descr, buf);
@@ -80,12 +80,12 @@ int main(void)
     Elem *list = NULL;
 
     fin = fopen(FILE_IN, "r");
-    FILE_CHECK(fin);
+    CHECK_FILE(fin);
     read_activities(&list, fin);
     fclose(fin);
 
     fout = fopen(FILE_OUT, "w");
-    FILE_CHECK(fout);
+    CHECK_FILE(fout);
     remove_overlaps(list, fout);
     fclose(fout);
 

@@ -7,8 +7,8 @@
 #define NAME_LEN   21
 #define EMAIL_LEN  51
 
-#define ALLOC_CHECK(p) if (!(p)) printf("Neuspesna alokacija\n"), exit(1)
-#define FILE_CHECK(f)  if (!(f)) printf("Neuspesno otvaranje fajla\n"), exit(2)
+#define CHECK_ALLOC(p) if (!(p)) printf("Neuspesna alokacija\n"), exit(1)
+#define CHECK_FILE(f)  if (!(f)) printf("Neuspesno otvaranje fajla\n"), exit(2)
 
 typedef struct elem {
     char name[NAME_LEN];
@@ -23,7 +23,7 @@ Elem *read_users(Elem *list, FILE *fin)
     char name[NAME_LEN], email[EMAIL_LEN];
 
     while (fscanf(fin, "%20s %50[^\n]", name, email) == 2) {
-        ALLOC_CHECK(p = malloc(sizeof *p));
+        CHECK_ALLOC(p = malloc(sizeof *p));
         strcpy(p->name, name);
         strcpy(p->email, email);
         p->signin_time = p->total_time = 0;
@@ -83,11 +83,11 @@ int main(void)
     Elem *list = NULL, *p, *pmax;
     FILE *fu, *fl;
 
-    FILE_CHECK(fu = fopen(FILE_USERS, "r"));
+    CHECK_FILE(fu = fopen(FILE_USERS, "r"));
     list = read_users(list, fu);
     fclose(fu);
 
-    FILE_CHECK(fl = fopen(FILE_LOG, "r"));
+    CHECK_FILE(fl = fopen(FILE_LOG, "r"));
     update_list(list, fl);
     fclose(fl);
 

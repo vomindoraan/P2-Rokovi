@@ -10,8 +10,8 @@
 #define POINTS(n) (2.0 / n)
 
 // Proverava memoriju/fajl i po potrebi izlazi iz programa
-#define ALLOC_CHECK(p) if (!(p)) printf("Neuspesna alokacija\n"), exit(1)
-#define FILE_CHECK(f)  if (!(f)) printf("Neuspesno otvaranje fajla\n"), exit(2)
+#define CHECK_ALLOC(p) if (!(p)) printf("Neuspesna alokacija\n"), exit(1)
+#define CHECK_FILE(f)  if (!(f)) printf("Neuspesno otvaranje fajla\n"), exit(2)
 
 const char *titles[] = {
     "docent", "vanredni profesor", "redovni profesor"
@@ -72,7 +72,7 @@ Elem *read_authors(FILE *fin)
                 continue;
             }
 
-            ALLOC_CHECK(p = malloc(sizeof *p));  // Novi autor
+            CHECK_ALLOC(p = malloc(sizeof *p));  // Novi autor
             strcpy(p->first, first);
             strcpy(p->last, last);  // Obavezno strcpy, ne može obična dodela
             p->pts = POINTS(n);
@@ -120,11 +120,11 @@ int main(void)
     FILE *fin, *fout;
     Elem *list;
 
-    FILE_CHECK(fin = fopen(FILE_IN, "r"));
+    CHECK_FILE(fin = fopen(FILE_IN, "r"));
     list = read_authors(fin);
     fclose(fin);
 
-    FILE_CHECK(fout = fopen(FILE_OUT, "w"));
+    CHECK_FILE(fout = fopen(FILE_OUT, "w"));
     write_authors(fout, list);
     fclose(fout);
 

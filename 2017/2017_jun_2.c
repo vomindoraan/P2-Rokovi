@@ -5,8 +5,8 @@
 #define NAME_LEN    31
 #define UNASSIGNED  "NEUPISAN"
 
-#define ALLOC_CHECK(p) if (!(p)) fputs("Neuspesna alokacija", stderr), exit(1)
-#define FILE_CHECK(f)  if (!(f)) perror(NULL), exit(2)
+#define CHECK_ALLOC(p) if (!(p)) fputs("Neuspesna alokacija", stderr), exit(1)
+#define CHECK_FILE(f)  if (!(f)) perror(NULL), exit(2)
 
 typedef struct {
     int  free_spots;
@@ -65,7 +65,7 @@ StudentNode *read_students(FILE *fin)
     
     while (fread(&st, sizeof st, 1, fin)) {
         StudentNode *node = malloc(sizeof *node);
-        ALLOC_CHECK(node);
+        CHECK_ALLOC(node);
         
         node->st = st;
         node->next = NULL;
@@ -103,9 +103,9 @@ void sorting_hat(StudentNode *students, SchoolArray schools, int n, FILE *fout)
 int main(void)
 {
     FILE *f_schools, *f_wishes, *f_admissions;
-    FILE_CHECK(f_schools    = fopen("skole.txt", "r"));
-    FILE_CHECK(f_wishes     = fopen("zelje.pod", "rb"));
-    FILE_CHECK(f_admissions = fopen("upisi.txt", "w"));
+    CHECK_FILE(f_schools    = fopen("skole.txt", "r"));
+    CHECK_FILE(f_wishes     = fopen("zelje.pod", "rb"));
+    CHECK_FILE(f_admissions = fopen("upisi.txt", "w"));
 
     SchoolArray schools;
     int n = read_schools(schools, f_schools);

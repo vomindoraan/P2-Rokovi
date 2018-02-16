@@ -29,29 +29,29 @@ Pošto su ovi kodovi uvek isti, može se značajno uštedeti na pisanju ako se t
 
 ```C
 Elem *p = malloc(sizeof *p);
-ALLOC_CHECK(p);
+CHECK_ALLOC(p);
 ```
 
-ili, ukoliko je `p` ranije definisano, još kraće: `ALLOC_CHECK(p = malloc(sizeof *p));`. Naravno, na kraju se memorija i dalje mora osloboditi s `free(p)`.
+ili, ukoliko je `p` ranije definisano, još kraće: `CHECK_ALLOC(p = malloc(sizeof *p));`. Naravno, na kraju se memorija i dalje mora osloboditi s `free(p)`.
 
 ### Implementacija
 
 Pomenuti makroi se mogu definisati na sledeći način:
 
 ```C
-#define ALLOC_CHECK(p) if (!(p)) puts("Neuspesna alokacija"), exit(1)
-#define FILE_CHECK(f)  if (!(f)) perror(NULL), exit(2)
+#define CHECK_ALLOC(p) if (!(p)) puts("Neuspesna alokacija"), exit(1)
+#define CHECK_FILE(f)  if (!(f)) perror(NULL), exit(2)
 ```
 
 Ako je ostatak koda na srpskom, mogu se nazvati i `PROV_MEM` i `PROV_DAT`, respektivno, ili bilo kako drugačije. Manje poznate funkcije koje se ovde koriste su objašnjene [ispod](#ostalo).
 
-Na ovaj način, kada pretprocesor uradi tekstualnu zamenu, naredba `ALLOC_CHECK(p = malloc(sizeof *p));` postane `if (!(p = malloc(sizeof *p))) puts("Neuspesna alokacija"), exit(1);` što je ekvivalentno velikom `if` bloku odozgo; odnosno:
+Na ovaj način, kada pretprocesor uradi tekstualnu zamenu, naredba `CHECK_ALLOC(p = malloc(sizeof *p));` postane `if (!(p = malloc(sizeof *p))) puts("Neuspesna alokacija"), exit(1);` što je ekvivalentno velikom `if` bloku odozgo; odnosno:
 
 1. pokuša se alokacija bloka memorije date veličine;
 2. rezultat se dodeli u pokazivačku promenljivu;
 3. ako je rezultat nula, ispisuje se poruka i prekida se program.
 
-Isto važi i za makro `FILE_CHECK`, samo je tu u pitanju otvaranje datoteke umesto alokacija. Primetiti da su u makroima zagrade <code>if (!**(**p**)**)</code> veoma bitne jer bi bez njih tekstualna zamena dala neispravan kod.
+Isto važi i za makro `CHECK_FILE`, samo je tu u pitanju otvaranje datoteke umesto alokacija. Primetiti da su u makroima zagrade <code>if (!**(**p**)**)</code> veoma bitne jer bi bez njih tekstualna zamena dala neispravan kod.
 
 ### `ASSIGN` makro
 
@@ -74,7 +74,7 @@ Mali nedostatak ovih makroa je da se zbog svog oblika ne smeju naći unutar krat
 
 ```C
 if (uslov)
-    ALLOC_CHECK(p = malloc(sizeof *p));
+    CHECK_ALLOC(p = malloc(sizeof *p));
 else  // Odnosi se na if u makrou, ne na `if (uslov)`
     puts("Nije uslov");
 ```

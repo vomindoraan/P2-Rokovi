@@ -6,7 +6,7 @@
 #define KNIGHT 'S'
 #define EMPTY  'O'
 
-#define ALLOC_CHECK(p) if (!(p)) fputs("Neuspesna alokacija", stderr), exit(1)
+#define CHECK_ALLOC(p) if (!(p)) fputs("Neuspesna alokacija", stderr), exit(1)
 
 typedef struct {
     char **squares;
@@ -20,11 +20,11 @@ typedef struct {
 Board read_board(int m, int n)
 {
     Board board = { calloc(m, sizeof(char*)), m, n };
-    ALLOC_CHECK(board.squares);
+    CHECK_ALLOC(board.squares);
 
     for (int i = 0; i < m; i++) {
         board.squares[i] = malloc(n);
-        ALLOC_CHECK(board.squares[i]);
+        CHECK_ALLOC(board.squares[i]);
 
         for (int j = 0; j < n; j++) {
             char c = getchar();

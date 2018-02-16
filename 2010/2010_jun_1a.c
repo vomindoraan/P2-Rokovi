@@ -6,8 +6,8 @@
 #define FILE_TRIPS "putovanja.txt"
 #define REG_LEN    7
 
-#define ALLOC_CHECK(p) if (!(p)) printf("Neuspesna alokacija\n"), exit(1)
-#define FILE_CHECK(f)  if (!(f)) printf("Neuspesno otvaranje fajla\n"), exit(2)
+#define CHECK_ALLOC(p) if (!(p)) printf("Neuspesna alokacija\n"), exit(1)
+#define CHECK_FILE(f)  if (!(f)) printf("Neuspesno otvaranje fajla\n"), exit(2)
 // Umesto drugog printf može perror(NULL) što automatski štampa prikladnu grešku
 
 typedef struct elem {
@@ -26,7 +26,7 @@ Elem *read_cars(FILE *file)
         unsigned size, i = 0;
 
         Elem *p = malloc(sizeof *p);
-        ALLOC_CHECK(p);
+        CHECK_ALLOC(p);
         
         if (fscanf(file, "%6s ", p->reg) != 1) {
             return list;
@@ -36,19 +36,19 @@ Elem *read_cars(FILE *file)
         p->next = NULL;
 
         p->name = malloc(size = 10);
-        ALLOC_CHECK(p->name);
+        CHECK_ALLOC(p->name);
 
         while ((c = fgetc(file)) != '\n') {
             if (i == size) {
                 p->name = realloc(p->name, size *= 2);
-                ALLOC_CHECK(p->name);
+                CHECK_ALLOC(p->name);
             }
             p->name[i++] = c;
         }
 
         p->name[i] = '\0';
         p->name = realloc(p->name, i+1);
-        // ALLOC_CHECK nije potreban jer se skraćuje
+        // CHECK_ALLOC nije potreban jer se skraćuje
 
         if (!list) {
             list = p;
@@ -91,12 +91,12 @@ int main(void)
     unsigned km;
 
     file = fopen(FILE_CARS, "r");
-    FILE_CHECK(file);
+    CHECK_FILE(file);
     list = read_cars(file);
     fclose(file);
 
     file = fopen(FILE_TRIPS, "r");
-    FILE_CHECK(file);
+    CHECK_FILE(file);
     read_trips(file, list);
     fclose(file);
 
