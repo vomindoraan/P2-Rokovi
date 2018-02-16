@@ -6,7 +6,7 @@
 
 #define CHECK_ALLOC(p) if (!(p)) puts("Neuspesna alokacija"), exit(1)
 
-/* Proverava da li je reč šifrovana */
+// Proverava da li je reč šifrovaa
 bool is_encrypted(char *word)
 {
     bool enc;
@@ -28,7 +28,7 @@ bool is_encrypted(char *word)
     return enc;
 }
 
-/* Prvi način (učitavanje reč po reč i obrada) */
+// Prvi način (učitavanje reč po reč i obrada)
 int main(void)
 {
     char *word, c;
@@ -66,7 +66,7 @@ int main(void)
     return 0;
 }
 
-/* Drugi način (učitavanje celog reda i razbijanje na reči sa strtok) */
+// Drugi način (učitavanje celog reda i razbijanje na reči sa strtok)
 int main(void)
 {
     char *str, *word, c;

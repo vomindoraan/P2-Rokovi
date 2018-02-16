@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-/* Euklidov algoritam za najveći zajednički delilac */
+// Euklidov algoritam za najveći zajednički delilac
 int gcd(int a, int b)
 {
     return (b == 0) ? a : gcd(b, a % b);
