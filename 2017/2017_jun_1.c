@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define CHECK_ALLOC(p) if (!(p)) printf("Neuspesna alokacija\n"), exit(1)
 

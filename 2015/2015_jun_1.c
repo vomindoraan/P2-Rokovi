@@ -66,6 +66,7 @@ int main(void)
     return 0;
 }
 
+/*
 // Drugi način (učitavanje celog reda i razbijanje na reči sa strtok)
 int main(void)
 {
@@ -99,3 +100,4 @@ int main(void)
     free(str);
     return 0;
 }
+*/
