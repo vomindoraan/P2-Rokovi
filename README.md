@@ -43,7 +43,7 @@ Pomenuti makroi se mogu definisati na sledeći način:
 #define CHECK_FILE(f)  if (!(f)) perror(NULL), exit(2)
 ```
 
-Ako je ostatak koda na srpskom, mogu se nazvati i `PROV_MEM` i `PROV_DAT`, respektivno, ili bilo kako drugačije. Manje poznate funkcije koje se ovde koriste su objašnjene [ispod](#ostalo).
+Ako je ostatak koda na srpskom, mogu se nazvati i `PROV_MEM` i `PROV_DAT`, ili bilo kako drugačije. Manje poznate funkcije koje se ovde koriste su objašnjene [ispod](#ostalo).
 
 Na ovaj način, kada pretprocesor uradi tekstualnu zamenu, naredba `CHECK_ALLOC(p = malloc(sizeof *p));` postane `if (!(p = malloc(sizeof *p))) puts("Neuspesna alokacija"), exit(1);` što je ekvivalentno velikom `if` bloku odozgo; odnosno:
 
@@ -90,13 +90,13 @@ Funkcija `puts` ispisuje string na standardni izlaz i prelazi u novi red. `puts(
 
 `fputs` radi sličnu stvar, samo što umesto na izlaz ispisuje string u datoteku koja se zadaje kao drugi argument. Dakle, <code>fputs("Neuspesna alokacija", [stderr](http://www.cplusplus.com/reference/cstdio/stderr/))</code> umesto na standardni izlaz ispisuje poruku na izlaz za greške (mada to nije toliko bitno za zadatke), dok `fputs("neki string\n", fp)` upisuje string u otvorenu datoteku na koju pokazuje `fp`. Za razliku od `puts`, ova funkcija sama po sebi ne ispisuje znak za novi red, već on mora biti deo stringa.
 
-### <code>[perror](http://www.cplusplus.com/reference/cstdio/perror/)(NULL)</code>
+### <code>[perror](http://www.cplusplus.com/reference/cstdio/perror/)</code>
 
-Veoma korisna funkcija koja automatski ispisuje odgovarajuću poruku za grešku koja se desila prilikom otvaranja datoteke, npr. „No such file or directory” ili „File already in use”. Umesto `NULL` se može proslediti string koji će se ispisati zajedno sa porukom, npr. `perror("Greska")` → „Greska: File already in use”.
+Veoma korisna funkcija koja automatski ispisuje odgovarajuću poruku za grešku koja se desila prilikom otvaranja datoteke, npr. „No such file or directory” ili „File already in use”. Umesto praznog pokazivača `perror(NULL)` se može proslediti string koji će se ispisati zajedno sa porukom, npr. `perror("Greska")` daje „Greska: File already in use”.
 
 Sve gorenavedene funkcije su iz zaglavlja `<stdio.h>`.
 
-### `sizeof *p` vs <code>sizeof(<em>tip</em>)</code>
+### `sizeof *p` ili <code>sizeof(<em>tip</em>)</code>
 
 Ove dve operacije rade isto (daju veličinu u bajtovima onoga na šta `p` pokazuje), ali je prvo [fleksibilnije](https://stackoverflow.com/q/373252/1523774) i to je preporučeni način pisanja. Primetiti da kada se stavlja `*p` umesto _`tip`_ zagrade nisu potrebne.
 
@@ -118,10 +118,10 @@ Po standardu jezika C postoje dva ispravna potpisa za glavni program:
 1. `int main(void)` – bez argumenata komandne linije;
 2. `int main(int argc, char *argv[])` – sa argumentima komandne linije.
 
-Pritom vredi naglasiti da imena parametara `argc` i `argv` nisu ni na koji način posebna i da se oni mogu zvati bilo kako, dokle god su im tipovi `int` i `char*[]` (odnosno `char**`), respektivno. Dakle, i `int main(int n, char **a)` je sasvim ispravan potpis glavnog programa.
+Pritom vredi naglasiti da imena parametara `argc` i `argv` nisu ni na koji način posebna i da se oni mogu zvati bilo kako, dokle god su im tipovi `int` i `char*[]` (odnosno `char**`), tim redom. Dakle, i `int main(int n, char **a)` je sasvim ispravan potpis glavnog programa.
 
 Prema tome, varijante `void main()` ili, ne daj bože, samo `main()` **nisu ispravne** i ne treba tako pisati. Razlozi zašto prevodilac ovo dozvoljava su istorijski (davno, pre standardizacije C-a, se pisalo ovako i na još par načina), ali tome nije mesto u današnjem kodu. Mada iz nekog razloga na Katedri i dalje ovako pišu.
 
 Što se tiče potpisa `int main()`, i on može proći kao prigodna zamena za 1. varijantu, ali postoji mala razlika: u C-u potpis `(void)` znači da funkcija _ne prima_ argumente, dok `()` znači da prima _proizvoljan broj_ argumenata. Prva varijanta je bolja jer je eksplicitnija.
 
-Povratna vrednost glavnog programa je tipa `int` zato što preko nje programi javljaju okruženju da li su se uspešno izvršili (0 – uspešno; ≠0 – neuspešno, a vrednost predstavlja kod greške). Međutim, `return 0;` na kraju `main`-a se ne mora pisati jer se po standardu podrazumeva.
+Povratna vrednost glavnog programa je tipa `int` zato što preko nje programi javljaju okruženju da li su se uspešno izvršili (0 – uspešno; ≠0 – neuspešno, a vrednost predstavlja kod greške). Međutim, `return 0;` na kraju `main`-a se ne mora pisati jer se po standardu podrazumeva.
