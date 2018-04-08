@@ -19,7 +19,7 @@
 // U jednoj naredbi štampa grešku i izlazi iz programa
 // perror je ugrađena f-ja koja sama ištampa ime fajla a potom i poruku greške,
 // npr. "izlaz.txt: Access denied" ili "imenik.dat: No such file or directory"
-#define IO_ERROR(f) perror(f), exit(1)
+#define IO_ERROR(f) (perror(f), exit(1))
 
 // Otvara fajl, vrši proveru, izlazi po potrebi
 #define ASSIGN(p, f, m) if (!((p) = fopen(f, m))) IO_ERROR(f)

@@ -7,7 +7,7 @@
 #define HIGH 10000
 
 #define SEED_RNG srand(time(NULL))
-#define SQR(x)   (x)*(x)
+#define SQR(x)   ((x)*(x))
 
 // Vraća pseudoslučajan ceo broj u opsegu [min, max]
 int rand_int(int min, int max)

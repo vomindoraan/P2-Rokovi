@@ -11,7 +11,7 @@
 #define MAX_ENTRIES 300
 
 // Štampa gresku, prekida program
-#define IO_ERROR(f) perror(f), exit(1)
+#define IO_ERROR(f) (perror(f), exit(1))
 
 // Otvara fajl, vrši proveru, izlazi po potrebi
 #define ASSIGN(p, f, m) if (!((p) = fopen(f, m))) IO_ERROR(f)

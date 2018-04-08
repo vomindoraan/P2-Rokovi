@@ -7,7 +7,7 @@
 #define FILE_IN  "radovi.txt"
 #define FILE_OUT "izlaz.txt"
 
-#define POINTS(n) (2.0 / n)
+#define POINTS(n) (2.0 / (n))
 
 // Proverava memoriju/fajl i po potrebi izlazi iz programa
 #define CHECK_ALLOC(p) if (!(p)) printf("Neuspesna alokacija\n"), exit(1)
