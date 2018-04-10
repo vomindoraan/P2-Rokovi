@@ -2,7 +2,7 @@
 
 int main(void)
 {
-    unsigned a, b, i = 15;
+    unsigned a, b, i = 15;  // Opštije: i = sizeof(b)*8-1;
     scanf("%X%X", &a, &b);
 
     // Pomera masku ulevo dok 1 ne dođe na najviši bit
