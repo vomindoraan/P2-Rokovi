@@ -3,7 +3,7 @@
 Rešeni zadaci iz jezika C sa rokova iz Programiranja 2 na ETF-u
 
 
-## O skraćenicama
+## Skraćenice
 
 ### Motivacija
 
@@ -36,14 +36,14 @@ ili, ukoliko je `p` ranije definisano, još kraće: `CHECK_ALLOC(p = malloc(size
 
 ### Implementacija
 
-Pomenuti makroi se mogu definisati na sledeći način:
+Pomenuti makroi se mogu realizovati na sledeći način:
 
 ```C
 #define CHECK_ALLOC(p) if (!(p)) puts("Neuspesna alokacija"), exit(1)
 #define CHECK_FILE(f)  if (!(f)) perror(NULL), exit(2)
 ```
 
-Ako je ostatak koda na srpskom, mogu se nazvati i `PROV_MEM` i `PROV_DAT`, ili bilo kako drugačije. Manje poznate funkcije koje se ovde koriste su objašnjene [ispod](#ostalo).
+Ako je ostatak koda na srpskom, mogu se nazvati i `PROV_MEM` i `PROV_DAT`, ili bilo kako drugačije. Manje poznate funkcije koje se ovde koriste su objašnjene [ispod](#korisne-funkcije).
 
 Na ovaj način, kada pretprocesor uradi tekstualnu zamenu, naredba `CHECK_ALLOC(p = malloc(sizeof *p));` postane `if (!(p = malloc(sizeof *p))) puts("Neuspesna alokacija"), exit(1);` što je ekvivalentno velikom `if` bloku odozgo; odnosno:
 
@@ -82,7 +82,7 @@ else  // Odnosi se na if u makrou, ne na `if (uslov)`
 Mala je verovatnoća da se ovo desi, ali u tom slučaju samo treba pisati vitičaste zagrade oko grana `if`-a i neće biti problema.
 
 
-## Ostalo
+## Korisne funkcije
 
 ### [`puts`](http://www.cplusplus.com/reference/cstdio/puts/) / [`fputs`](http://www.cplusplus.com/reference/cstdio/fputs/)
 
@@ -96,20 +96,8 @@ Veoma korisna funkcija koja automatski ispisuje odgovarajuću poruku za grešku 
 
 Sve gorenavedene funkcije su iz zaglavlja `<stdio.h>`.
 
-### `sizeof *p` ili <code>sizeof(<em>tip</em>)</code>
 
-Ove dve operacije rade isto (daju veličinu u bajtovima onoga na šta `p` pokazuje), ali je prvo [fleksibilnije](https://stackoverflow.com/q/373252/1523774) i to je preporučeni način pisanja. Primetiti da kada se stavlja `*p` umesto _`tip`_ zagrade nisu potrebne.
-
-Alociranje niza od 10 brojeva onda izgleda ovako: `int *niz = malloc(10 * sizeof *niz);` ili `int *niz = calloc(10, sizeof *niz);`, dok se matrice formiraju na sledeći način:
-
-```C
-int **mat  = calloc(m, sizeof *mat);  // *mat daje tip int *
-for (i = 0; i < m; i++) {
-    mat[i] = calloc(n, sizeof **mat);  // **mat daje tip int
-    for (j = 0; j < n; j++)
-        scanf("%d", &mat[i][j]);
-}
-```
+## Ostalo
 
 ### Potpis funkcije `main`
 
@@ -124,4 +112,19 @@ Prema tome, varijante `void main()` ili, ne daj bože, samo `main()` **nisu ispr
 
 Što se tiče potpisa `int main()`, i on može proći kao prigodna zamena za 1. varijantu, ali postoji mala razlika: u C-u potpis `(void)` znači da funkcija _ne prima_ argumente, dok `()` znači da prima _proizvoljan broj_ argumenata. Prva varijanta je bolja jer je eksplicitnija.
 
-Povratna vrednost glavnog programa je tipa `int` zato što preko nje programi javljaju okruženju da li su se uspešno izvršili (0 – uspešno; ≠0 – neuspešno, a vrednost predstavlja kod greške). Međutim, `return 0;` na kraju `main`-a se ne mora pisati jer se po standardu podrazumeva.
+Povratna vrednost glavnog programa je tipa `int` zato što preko nje programi javljaju okruženju da li su se uspešno izvršili (0 – uspešno; ≠0 – neuspešno, a sama vrednost predstavlja kod greške). Međutim, `return 0;` na kraju `main`-a se ne mora pisati jer se po standardu u toj funkciji podrazumeva.
+
+### `sizeof *p` ili <code>sizeof(<em>tip</em>)</code>
+
+Ove dve operacije rade isto (daju veličinu u bajtovima onoga na šta `p` pokazuje), ali je prvo [fleksibilnije](https://stackoverflow.com/q/373252/1523774) i to je preporučeni način pisanja. Primetiti da kada se stavlja `*p` umesto _`tip`_ zagrade nisu potrebne.
+
+Alociranje niza od 10 brojeva onda izgleda ovako: `int *niz = malloc(10 * sizeof *niz);` ili `int *niz = calloc(10, sizeof *niz);`, dok se matrice formiraju na sledeći način:
+
+```C
+int **mat  = calloc(m, sizeof *mat);   // *mat daje tip int *
+for (i = 0; i < m; i++) {
+    mat[i] = calloc(n, sizeof **mat);  // **mat daje tip int
+    for (j = 0; j < n; j++)
+        scanf("%d", &mat[i][j]);
+}
+```
