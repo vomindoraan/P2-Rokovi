@@ -17,7 +17,7 @@ int rand_int(int min, int max)
 
 // Proverava da li je n Fibonačijev broj
 // Broj n pripada Fibonačijevom nizu (1, 1, 2, 3, 5, ...) ako je bar jedan od
-// izraza 5n²-4 i 5n²+4 koren nekog prirodnog broja (Bineova formula)
+// izraza 5n²-4 i 5n²+4 kvadrat nekog prirodnog broja (Bineova formula)
 int check_fib(int n)
 {
     int a = 5*SQR(n) - 4, b = 5*SQR(n) + 4;
