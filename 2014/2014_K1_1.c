@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#define N 16
+#define N 16  // Opštije: #define N (sizeof(unsigned)*8)
 
 int main(void)
 {
