@@ -5,19 +5,6 @@
 #define MAX_LISTICA 100
 #define MAX_BROJEVA 50
 
-// Generiše pseudoslučajan ceo broj u opsegu [low, high]
-int generisi(int low, int high) {
-    return rand()/(RAND_MAX+1.0) * (high-low+1) + low;
-}
-
-// Proverava da li niz dužine n sadrži zadatu vrednost
-int sadrzi(int niz[], int n, int vr)
-{
-    int i;
-    for (i = 0; i < n && niz[i] != vr; i++);
-    return i < n;
-}
-
 int main(void)
 {
     srand(time(NULL));
@@ -32,38 +19,38 @@ int main(void)
     scanf("%d", &n);
     if (n < 1 || n > MAX_BROJEVA) return 2;
 
-    int kombinacije[MAX_LISTICA][MAX_BROJEVA];
-    printf("\nUneti kombinacije:\n");
+    // kombinacije[i][broj] je 1 ako je na i-tom listiću zaokružen broj
+    int kombinacije[MAX_LISTICA][MAX_BROJEVA+1] = { 0 };  // Na početku sve 0
+    printf("Uneti kombinacije:\n");
     for (int i = 0; i < m; i++) {
-        for (int j = 0; j < n; j++) {
-            scanf("%d", &kombinacije[i][j]);
+        for (int j = 0, broj; j < n; j++) {
+            scanf("%d", &broj);
+            kombinacije[i][broj] = 1;
         }
     }
 
-    int dobitna[MAX_BROJEVA];
-    printf("\nDobitna kombinacija:\n");
-    for (int j = 0; j < n;) {
-        int broj = generisi(1, MAX_BROJEVA);
-        printf("Izvucen %d. broj: %d\n", j+1, broj);
-
-        if (!sadrzi(dobitna, j, broj)) {
-            dobitna[j++] = broj;  // Broj ne postoji, dodaj ga
-        } else {
-            printf("Broj postoji, ponavlja se\n");
-        }
+    // dobitna[broj] daje da li je broj izvučen ili ne
+    int dobitna[MAX_BROJEVA+1] = { 0 };  // Na početku sve 0
+    for (int j = 0; j < n; j++) {
+        int broj = rand()/(RAND_MAX+1.0) * MAX_BROJEVA + 1;
+        if (!dobitna[broj]) {
+            dobitna[broj] = 1;  // Kad izvuče novi broj, postavi na 1
+            printf("Izvucen broj %d\n", broj);
+        } else j--;             // U suprotnom ponovi izvlačenje
     }
 
     int n_pogodaka = 0, n_1_pogodaka = 0;
-    for (int i = 0; i < m; i++) {
+    for (int i = 0; i < m; i++) {  // Za svaki listić
         int p = 0;
-        for (int j = 0; j < n; j++) {
-            p += sadrzi(dobitna, n, kombinacije[i][j]);
+        for (int j = 1; j <= MAX_BROJEVA; j++) {  // Za svaki moguć broj
+            // Ako je broj u listiću i u dobitnoj, uvećaj broj pogodaka
+            if (kombinacije[i][j] && dobitna[j]) p++;
         }
         if (p == n)   n_pogodaka++;
         if (p == n-1) n_1_pogodaka++;
     }
 
-    printf("\nBroj listica sa %d pogodaka: %d\n", n, n_pogodaka);
-    printf("Broj listica sa %d pogodaka: %d\n", n-1, n_1_pogodaka);
+    printf("N pogodaka:   %d\n"
+           "N-1 pogodaka: %d\n", n_pogodaka, n_1_pogodaka);
     return 0;
 }
