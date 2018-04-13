@@ -18,7 +18,7 @@ int sadrzi(int niz[], int n, int vr)
     return i < n;
 }
 
-int main()
+int main(void)
 {
     srand(time(NULL));
 
@@ -42,12 +42,12 @@ int main()
 
     int dobitna[MAX_BROJEVA];
     printf("\nDobitna kombinacija:\n");
-    for (int i = 0; i < n;) {
+    for (int j = 0; j < n;) {
         int broj = generisi(1, MAX_BROJEVA);
-        printf("Izvucen %d. broj: %d\n", i+1, broj);
+        printf("Izvucen %d. broj: %d\n", j+1, broj);
 
-        if (!sadrzi(dobitna, i, broj)) {
-            dobitna[i++] = broj;  // Broj ne postoji, dodaj ga
+        if (!sadrzi(dobitna, j, broj)) {
+            dobitna[j++] = broj;  // Broj ne postoji, dodaj ga
         } else {
             printf("Broj postoji, ponavlja se\n");
         }
