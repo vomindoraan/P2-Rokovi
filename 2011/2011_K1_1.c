@@ -9,10 +9,10 @@
 #define SEED_RNG srand(time(NULL))
 #define SQR(x)   ((x)*(x))
 
-// Vraća pseudoslučajan ceo broj u opsegu [min, max]
-int rand_int(int min, int max)
+// Generiše pseudoslučajan ceo broj u opsegu [LOW, HIGH]
+int random(void)
 {
-    return rand() / (double)RAND_MAX * (max-min) + min;
+    return rand()/(RAND_MAX+1.0) * (HIGH-LOW+1) + LOW;
 }
 
 // Proverava da li je n Fibonačijev broj
@@ -20,24 +20,21 @@ int rand_int(int min, int max)
 // izraza 5n²-4 i 5n²+4 kvadrat nekog prirodnog broja (Bineova formula)
 int check_fib(int n)
 {
-    int a = 5*SQR(n) - 4, b = 5*SQR(n) + 4;
+    int a = 5*SQR(n)-4, b = 5*SQR(n)+4;
     int sqrt_a = sqrt(a), sqrt_b = sqrt(b);
     return SQR(sqrt_a) == a || SQR(sqrt_b) == b;
 }
 
 int main(void)
 {
-    int n, i;
-
     SEED_RNG;
-    printf("Generisani broj je: %d\n", n = rand_int(LOW, HIGH));
+    int n;
+    printf("Generisani broj je: %d\n", n = random());
     printf("Taj broj %s Fibonacijev\n", check_fib(n) ? "jeste" : "nije");
 
-    for (i = 0; i < 1000000; ++i) {
+    for (int i = 0; i < 1000000; ++i) {
         if (check_fib(i)) {
             printf("%d\n", i);
         }
     }
-
-    return 0;
 }

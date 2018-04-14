@@ -8,31 +8,24 @@
 
 #define SEED_RNG srand(time(NULL))
 
-// Vraća pseudoslučajan ceo broj u opsegu [LOW, HIGH]
+// Generiše pseudoslučajan ceo broj u opsegu [LOW, HIGH]
 int rand100(void)
 {
-    return rand() / (double)RAND_MAX * (HIGH-LOW) + LOW;
+    return rand()/(RAND_MAX+1.0) * (HIGH-LOW+1) + LOW;
 }
 
 int main(void)
 {
-    int r, i, t;
-
     SEED_RNG;
-    r = rand100();
+    int r = rand100(), t;
     printf("Slucajan broj je generisan, imate %d pokusaja:\n\n", N_TRIES);
 
-    for (i = 0; i < N_TRIES; ++i) {
+    for (int i = 0; i < N_TRIES; ++i) {
         scanf("%d", &t);
-        if (t == r) {
-            ++i;
-            break;
-        }
+        if (t == r) break;
         printf("Vas broj je %s od trazenog\n\n", (t < r) ? "manji" : "veci");
     }
 
-    printf("Broj pokusaja: %d\n", i);
+    printf("Broj pokusaja: %d\n", i+1);
     printf("Trazeni broj %s pogodjen!\n", (t == r) ? "je" : "nije");
-
-    return 0;
 }

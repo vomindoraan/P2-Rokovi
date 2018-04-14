@@ -7,7 +7,7 @@
 // Generiše pseudoslučajan ceo broj u opsegu [low, high]
 int random(int low, int high)
 {
-    return rand()/(double)RAND_MAX * (high-low) + low;
+    return rand()/(RAND_MAX+1.0) * (high-low+1) + low;
 }
 
 int main(void)
@@ -45,4 +45,5 @@ int main(void)
     for (int i = 0; i < n; i++) {
         printf("%u ", a[i]);
     }
+    return 0;
 }
