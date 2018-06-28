@@ -25,7 +25,7 @@ if (!fp) {
 }
 ```
 
-Pošto su ovi kodovi uvek isti, može se značajno uštedeti na pisanju ako se ti delovi izvuku u makroe. Na taj način, umesto pisanja `if`-ova na svakom mestu gde se alocira memorija ili otvara datoteka (što može biti i do 5–6 puta po zadatku), dobija se ovako nešto:
+Pošto su ovi delovi uvek isti, može se značajno uštedeti na pisanju ako se taj kod izvuče u makroe. Na taj način, umesto pisanja `if` naredbi na svakom mestu gde se alocira memorija ili otvara datoteka (što može biti i do 5–6 puta po zadatku), dobija se ovako nešto:
 
 ```C
 Elem *p = malloc(sizeof *p);
@@ -70,7 +70,7 @@ ASSIGN(fp, "moja_dat.bin", "rb+");
 
 ### Nedostatak
 
-Mali nedostatak ovih makroa je da se zbog svog oblika ne smeju naći unutar kratke `if` naredbe neposredno pre `else` grane. Makro ekspanzija bi u tom slučaju neželjeno izmenila semantiku programa. Primer:
+Mali nedostatak ovih makroa je da se zbog svog oblika ne smeju naći unutar kratke `if` naredbe (bez `{ }`) neposredno pre `else` grane. Makro ekspanzija bi u tom slučaju neželjeno izmenila semantiku programa. Primer:
 
 ```C
 if (uslov)
