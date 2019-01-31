@@ -86,9 +86,9 @@ Mala je verovatnoća da se ovo desi, ali u tom slučaju samo treba pisati vitič
 
 ### [`puts`](http://www.cplusplus.com/reference/cstdio/puts/) / [`fputs`](http://www.cplusplus.com/reference/cstdio/fputs/)
 
-Funkcija `puts` ispisuje string na standardni izlaz i prelazi u novi red. `puts("Neuspesna alokacija");` je, dakle, isto što i `printf("Neuspesna alokacija\n");`, samo što je malo brže za pisanje, i ne može doći do slučajne greške ako se doslovno ispusuju znaci `%`, jer `puts` nema formatiranje.
+Funkcija `puts` ispisuje string na standardni izlaz i prelazi u novi red. `puts("Neuspesna alokacija");` je, dakle, isto što i `printf("Neuspesna alokacija\n");`, samo što je malo brže za pisanje, i ne može doći do slučajne greške ako se doslovno ispisuju znaci `%`, jer `puts` nema formatiranje.
 
-`fputs` radi sličnu stvar, samo što umesto na izlaz ispisuje string u datoteku koja se zadaje kao drugi argument. Dakle, <code>fputs("Neuspesna alokacija", [stderr](http://www.cplusplus.com/reference/cstdio/stderr/))</code> umesto na standardni izlaz ispisuje poruku na izlaz za greške (mada to nije toliko bitno za zadatke), dok `fputs("neki string\n", fp)` upisuje string u otvorenu datoteku na koju pokazuje `fp`. Za razliku od `puts`, ova funkcija sama po sebi ne ispisuje znak za novi red, već on mora biti deo stringa.
+`fputs` radi sličnu stvar, samo što umesto na izlaz ispisuje string u datoteku koja se zadaje kao drugi argument. Dakle, <code>fputs("Neuspesna alokacija", [stderr](http://www.cplusplus.com/reference/cstdio/stderr/))</code> umesto na standardni izlaz ispisuje poruku na izlaz za greške (mada to nije toliko bitno za zadatke), dok `fputs("neki string\n", fp)` upisuje string u otvorenu datoteku na koju pokazuje `fp`. Za razliku od `puts`, ova funkcija ne ispisuje sama po sebi znak za novi red, već on mora biti deo stringa.
 
 ### <code>[perror](http://www.cplusplus.com/reference/cstdio/perror/)</code>
 
