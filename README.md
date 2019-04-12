@@ -110,9 +110,9 @@ Pritom vredi naglasiti da imena parametara `argc` i `argv` nisu ni na koji nači
 
 Prema tome, varijante `void main()` ili, ne daj bože, samo `main()` **nisu ispravne** i ne treba tako pisati. Razlozi zašto prevodilac ovo dozvoljava su istorijski (davno, pre standardizacije C-a, se pisalo ovako i na još par načina), ali tome nije mesto u današnjem kodu. Mada iz nekog razloga na Katedri i dalje ovako pišu.
 
-Što se tiče potpisa `int main()`, i on može proći kao prigodna zamena za 1. varijantu, ali postoji mala razlika: u C-u potpis `(void)` znači da funkcija _ne prima_ argumente, dok `()` znači da prima _proizvoljan broj_ argumenata. Prva varijanta je bolja jer je eksplicitnija.
+Što se tiče potpisa `int main()`, i on može proći kao prigodna zamena za 1. varijantu, ali postoji mala razlika: u C-u potpis `(void)` znači da funkcija _ne prima_ argumente, dok `()` znači da prima _neodređen broj_ argumenata. Prva varijanta je bolja jer je eksplicitnija.
 
-Povratna vrednost glavnog programa je tipa `int` zato što preko nje programi javljaju okruženju da li su se uspešno izvršili (0 – uspešno; ≠0 – neuspešno, a sama vrednost predstavlja kod greške). Međutim, `return 0;` na kraju `main`-a se ne mora pisati jer se po standardu u toj funkciji podrazumeva.
+Povratna vrednost glavnog programa je tipa `int` zato što preko nje programi javljaju okruženju da li su se uspešno izvršili (0 – uspešno; ≠0 – neuspešno, a sama vrednost predstavlja kod greške). Međutim, `return 0;` na kraju `main`-a se ne mora pisati jer se po standardu u toj (i samo u toj) funkciji podrazumeva.
 
 ### `sizeof *p` ili <code>sizeof(<em>tip</em>)</code>
 
@@ -121,10 +121,11 @@ Ove dve operacije rade isto (daju veličinu u bajtovima onoga na šta `p` pokazu
 Alociranje niza od 10 brojeva onda izgleda ovako: `int *niz = malloc(10 * sizeof *niz);` ili `int *niz = calloc(10, sizeof *niz);`, dok se matrice formiraju na sledeći način:
 
 ```C
-int **mat  = calloc(m, sizeof *mat);   // *mat daje tip int *
+int **mat  = calloc(m, sizeof *mat);   // *mat daje tip int*
 for (i = 0; i < m; i++) {
     mat[i] = calloc(n, sizeof **mat);  // **mat daje tip int
-    for (j = 0; j < n; j++)
+    for (j = 0; j < n; j++) {
         scanf("%d", &mat[i][j]);
+    }
 }
 ```
