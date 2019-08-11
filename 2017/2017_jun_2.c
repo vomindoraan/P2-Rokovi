@@ -31,9 +31,9 @@ typedef struct node {
 int read_schools(SchoolArray schools, FILE *fin)
 {
     int i = 0;
-    while (fscanf(fin, "%d %[^\n]", &schools[i].free_spots, schools[i].name)==2)
+    while (fscanf(fin, "%d %[^\n]", &schools[i].free_spots, schools[i].name) == 2)
         i++;
-    return i;
+    return i;  // Vraća broj učitanih škola
 }
 
 // Ubacuje novi čvor u listu uređeno po želji, pa po proseku, pa po br. prijave
@@ -41,7 +41,7 @@ StudentNode *insert_node(StudentNode *head, StudentNode *node)
 {
     StudentNode *p = head, *prev = NULL;
     Student st = node->st;
-    
+
     while (p &&
           (st.wish >  p->st.wish
         || st.wish == p->st.wish && st.gpa  < p->st.gpa
@@ -62,11 +62,11 @@ StudentNode *read_students(FILE *fin)
 {
     StudentNode *head = NULL;
     Student st;
-    
+
     while (fread(&st, sizeof st, 1, fin)) {
         StudentNode *node = malloc(sizeof *node);
         CHECK_ALLOC(node);
-        
+
         node->st = st;
         node->next = NULL;
 
@@ -89,12 +89,14 @@ void sorting_hat(StudentNode *students, SchoolArray schools, int n, FILE *fout)
 {
     for (StudentNode *p = students; p; p = p->next) {
         fprintf(fout, "%d %s %.2f ", p->st.id, p->st.name, p->st.gpa);
-        
+
         int i = p->st.wish;
         if (i >= 0 && i < n && schools[i].free_spots > 0) {
+            // Ako je studentova želja ispravna i u školi ima mesta, upiši ga
             fprintf(fout, "%s\n", schools[i].name);
             schools[i].free_spots--;
         } else {
+            // U suprotnom je student neupisan
             fprintf(fout, UNASSIGNED"\n");
         }
     }
