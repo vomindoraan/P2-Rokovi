@@ -4,28 +4,28 @@
 
 #define FILE_IN  "kalendar.txt"
 #define FILE_OUT "preklapanja.txt"
-#define BUF_LEN  81
+#define DESC_LEN 81
 
 #define CHECK_ALLOC(p) if (!(p)) printf("Neuspesna alokacija\n"), exit(1)
 #define CHECK_FILE(f)  if (!(f)) printf("Neuspesno otvaranje fajla\n"), exit(2)
 
 typedef struct elem {
     unsigned start, finish;
-    char descr[BUF_LEN];
+    char desc[DESC_LEN];
     struct elem *next;
 } Elem;
 
 void read_activities(Elem **plist, FILE *fin)
 {
     unsigned sh, sm, fh, fm;
-    char buf[BUF_LEN];
+    char desc[DESC_LEN];
 
-    while (fscanf(fin, "%u:%u-%u:%u %80[^\n]", &sh, &sm, &fh, &fm, buf) == 5) {
+    while (fscanf(fin, "%u:%u-%u:%u %80[^\n]", &sh, &sm, &fh, &fm, desc) == 5) {
         Elem *p = malloc(sizeof *p), *curr, *prev;
         CHECK_ALLOC(p);
         p->start = sh * 60 + sm;
         p->finish = fh * 60 + fm;
-        strcpy(p->descr, buf);
+        strcpy(p->desc, desc);
 
         curr = *plist;
         prev = NULL;
@@ -54,7 +54,7 @@ void remove_overlaps(Elem *list, FILE *fout)
 
             sh = q->start / 60, sm = q->start % 60;
             fh = q->finish / 60, fm = q->finish % 60;
-            fprintf(fout, "%u:%u-%u:%u %s\n", sh, sm, fh, fm, q->descr);
+            fprintf(fout, "%u:%u-%u:%u %s\n", sh, sm, fh, fm, q->desc);
 
             free(q);
             q = p->next;

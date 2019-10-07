@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX_LEN 101
+#define STR_LEN 101
 
 int main(void)
 {
-    char str[MAX_LEN], *c;
+    char str[STR_LEN], *c;
     int n, bc;
 
-    fgets(str, MAX_LEN, stdin);
+    fgets(str, STR_LEN, stdin);
 
     for (c = str; *c; ++c) {
         if (*c == '[') {

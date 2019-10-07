@@ -31,7 +31,9 @@ int main(void)
     } while (y < x);
 
     unsigned mask = 0;
-    for (int i = x; i <= y; i++) mask |= 1<<i;
+    for (int i = x; i <= y; i++) {
+        mask |= 1 << i;
+    }
     // Može i: mask = (1 << y-x+1) - 1;
 
     // Zamenjuje grupu bita od x. do y. između brojeva a[k] i a[k+1]
